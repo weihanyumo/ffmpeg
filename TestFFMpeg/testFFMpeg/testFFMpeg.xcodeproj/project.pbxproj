@@ -1,0 +1,619 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		961A77281D5C1FDF00EFA629 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A77271D5C1FDF00EFA629 /* main.m */; };
+		961A772B1D5C1FDF00EFA629 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A772A1D5C1FDF00EFA629 /* AppDelegate.m */; };
+		961A772E1D5C1FDF00EFA629 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A772D1D5C1FDF00EFA629 /* ViewController.m */; };
+		961A77311D5C1FDF00EFA629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961A772F1D5C1FDF00EFA629 /* Main.storyboard */; };
+		961A77331D5C1FDF00EFA629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961A77321D5C1FDF00EFA629 /* Assets.xcassets */; };
+		961A77361D5C1FDF00EFA629 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961A77341D5C1FDF00EFA629 /* LaunchScreen.storyboard */; };
+		961A77411D5C1FDF00EFA629 /* testFFMpegTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A77401D5C1FDF00EFA629 /* testFFMpegTests.m */; };
+		961A774C1D5C1FDF00EFA629 /* testFFMpegUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A774B1D5C1FDF00EFA629 /* testFFMpegUITests.m */; };
+		961A79241D5C4E0000EFA629 /* libffmpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A791A1D5C2BB200EFA629 /* libffmpeg.a */; };
+		961A79381D5C528000EFA629 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79371D5C528000EFA629 /* libbz2.1.0.tbd */; };
+		961A793A1D5C529100EFA629 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */; };
+		961A793C1D5C52A600EFA629 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		961A773D1D5C1FDF00EFA629 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 961A771B1D5C1FDF00EFA629 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 961A77221D5C1FDF00EFA629;
+			remoteInfo = testFFMpeg;
+		};
+		961A77481D5C1FDF00EFA629 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 961A771B1D5C1FDF00EFA629 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 961A77221D5C1FDF00EFA629;
+			remoteInfo = testFFMpeg;
+		};
+		961A79191D5C2BB200EFA629 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 961A79151D5C2BB200EFA629 /* ffmpeg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 961A77C81D5C28F900EFA629;
+			remoteInfo = ffmpeg;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		961A77231D5C1FDF00EFA629 /* testFFMpeg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testFFMpeg.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		961A77271D5C1FDF00EFA629 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		961A77291D5C1FDF00EFA629 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		961A772A1D5C1FDF00EFA629 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		961A772C1D5C1FDF00EFA629 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		961A772D1D5C1FDF00EFA629 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		961A77301D5C1FDF00EFA629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		961A77321D5C1FDF00EFA629 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		961A77351D5C1FDF00EFA629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		961A77371D5C1FDF00EFA629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		961A773C1D5C1FDF00EFA629 /* testFFMpegTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testFFMpegTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		961A77401D5C1FDF00EFA629 /* testFFMpegTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testFFMpegTests.m; sourceTree = "<group>"; };
+		961A77421D5C1FDF00EFA629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		961A77471D5C1FDF00EFA629 /* testFFMpegUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testFFMpegUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		961A774B1D5C1FDF00EFA629 /* testFFMpegUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testFFMpegUITests.m; sourceTree = "<group>"; };
+		961A774D1D5C1FDF00EFA629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		961A79151D5C2BB200EFA629 /* ffmpeg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ffmpeg.xcodeproj; path = ../ffmpeg/ffmpeg.xcodeproj; sourceTree = "<group>"; };
+		961A79371D5C528000EFA629 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
+		961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		961A77201D5C1FDF00EFA629 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				961A793C1D5C52A600EFA629 /* libz.1.2.5.tbd in Frameworks */,
+				961A793A1D5C529100EFA629 /* libiconv.2.4.0.tbd in Frameworks */,
+				961A79381D5C528000EFA629 /* libbz2.1.0.tbd in Frameworks */,
+				961A79241D5C4E0000EFA629 /* libffmpeg.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		961A77391D5C1FDF00EFA629 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		961A77441D5C1FDF00EFA629 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		961A771A1D5C1FDF00EFA629 = {
+			isa = PBXGroup;
+			children = (
+				961A79151D5C2BB200EFA629 /* ffmpeg.xcodeproj */,
+				961A77251D5C1FDF00EFA629 /* testFFMpeg */,
+				961A773F1D5C1FDF00EFA629 /* testFFMpegTests */,
+				961A774A1D5C1FDF00EFA629 /* testFFMpegUITests */,
+				961A793E1D5C546A00EFA629 /* Frameworks */,
+				961A77241D5C1FDF00EFA629 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		961A77241D5C1FDF00EFA629 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				961A77231D5C1FDF00EFA629 /* testFFMpeg.app */,
+				961A773C1D5C1FDF00EFA629 /* testFFMpegTests.xctest */,
+				961A77471D5C1FDF00EFA629 /* testFFMpegUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		961A77251D5C1FDF00EFA629 /* testFFMpeg */ = {
+			isa = PBXGroup;
+			children = (
+				961A77291D5C1FDF00EFA629 /* AppDelegate.h */,
+				961A772A1D5C1FDF00EFA629 /* AppDelegate.m */,
+				961A772C1D5C1FDF00EFA629 /* ViewController.h */,
+				961A772D1D5C1FDF00EFA629 /* ViewController.m */,
+				961A772F1D5C1FDF00EFA629 /* Main.storyboard */,
+				961A77321D5C1FDF00EFA629 /* Assets.xcassets */,
+				961A77341D5C1FDF00EFA629 /* LaunchScreen.storyboard */,
+				961A77371D5C1FDF00EFA629 /* Info.plist */,
+				961A77261D5C1FDF00EFA629 /* Supporting Files */,
+			);
+			path = testFFMpeg;
+			sourceTree = "<group>";
+		};
+		961A77261D5C1FDF00EFA629 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				961A77271D5C1FDF00EFA629 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		961A773F1D5C1FDF00EFA629 /* testFFMpegTests */ = {
+			isa = PBXGroup;
+			children = (
+				961A77401D5C1FDF00EFA629 /* testFFMpegTests.m */,
+				961A77421D5C1FDF00EFA629 /* Info.plist */,
+			);
+			path = testFFMpegTests;
+			sourceTree = "<group>";
+		};
+		961A774A1D5C1FDF00EFA629 /* testFFMpegUITests */ = {
+			isa = PBXGroup;
+			children = (
+				961A774B1D5C1FDF00EFA629 /* testFFMpegUITests.m */,
+				961A774D1D5C1FDF00EFA629 /* Info.plist */,
+			);
+			path = testFFMpegUITests;
+			sourceTree = "<group>";
+		};
+		961A79161D5C2BB200EFA629 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				961A791A1D5C2BB200EFA629 /* libffmpeg.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		961A793E1D5C546A00EFA629 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */,
+				961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */,
+				961A79371D5C528000EFA629 /* libbz2.1.0.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		961A77221D5C1FDF00EFA629 /* testFFMpeg */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 961A77501D5C1FDF00EFA629 /* Build configuration list for PBXNativeTarget "testFFMpeg" */;
+			buildPhases = (
+				961A771F1D5C1FDF00EFA629 /* Sources */,
+				961A77201D5C1FDF00EFA629 /* Frameworks */,
+				961A77211D5C1FDF00EFA629 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testFFMpeg;
+			productName = testFFMpeg;
+			productReference = 961A77231D5C1FDF00EFA629 /* testFFMpeg.app */;
+			productType = "com.apple.product-type.application";
+		};
+		961A773B1D5C1FDF00EFA629 /* testFFMpegTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 961A77531D5C1FDF00EFA629 /* Build configuration list for PBXNativeTarget "testFFMpegTests" */;
+			buildPhases = (
+				961A77381D5C1FDF00EFA629 /* Sources */,
+				961A77391D5C1FDF00EFA629 /* Frameworks */,
+				961A773A1D5C1FDF00EFA629 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				961A773E1D5C1FDF00EFA629 /* PBXTargetDependency */,
+			);
+			name = testFFMpegTests;
+			productName = testFFMpegTests;
+			productReference = 961A773C1D5C1FDF00EFA629 /* testFFMpegTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		961A77461D5C1FDF00EFA629 /* testFFMpegUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 961A77561D5C1FDF00EFA629 /* Build configuration list for PBXNativeTarget "testFFMpegUITests" */;
+			buildPhases = (
+				961A77431D5C1FDF00EFA629 /* Sources */,
+				961A77441D5C1FDF00EFA629 /* Frameworks */,
+				961A77451D5C1FDF00EFA629 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				961A77491D5C1FDF00EFA629 /* PBXTargetDependency */,
+			);
+			name = testFFMpegUITests;
+			productName = testFFMpegUITests;
+			productReference = 961A77471D5C1FDF00EFA629 /* testFFMpegUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		961A771B1D5C1FDF00EFA629 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = duhaodong;
+				TargetAttributes = {
+					961A77221D5C1FDF00EFA629 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					961A773B1D5C1FDF00EFA629 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 961A77221D5C1FDF00EFA629;
+					};
+					961A77461D5C1FDF00EFA629 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 961A77221D5C1FDF00EFA629;
+					};
+				};
+			};
+			buildConfigurationList = 961A771E1D5C1FDF00EFA629 /* Build configuration list for PBXProject "testFFMpeg" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 961A771A1D5C1FDF00EFA629;
+			productRefGroup = 961A77241D5C1FDF00EFA629 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 961A79161D5C2BB200EFA629 /* Products */;
+					ProjectRef = 961A79151D5C2BB200EFA629 /* ffmpeg.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				961A77221D5C1FDF00EFA629 /* testFFMpeg */,
+				961A773B1D5C1FDF00EFA629 /* testFFMpegTests */,
+				961A77461D5C1FDF00EFA629 /* testFFMpegUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		961A791A1D5C2BB200EFA629 /* libffmpeg.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libffmpeg.a;
+			remoteRef = 961A79191D5C2BB200EFA629 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		961A77211D5C1FDF00EFA629 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				961A77361D5C1FDF00EFA629 /* LaunchScreen.storyboard in Resources */,
+				961A77331D5C1FDF00EFA629 /* Assets.xcassets in Resources */,
+				961A77311D5C1FDF00EFA629 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		961A773A1D5C1FDF00EFA629 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		961A77451D5C1FDF00EFA629 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		961A771F1D5C1FDF00EFA629 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				961A772E1D5C1FDF00EFA629 /* ViewController.m in Sources */,
+				961A772B1D5C1FDF00EFA629 /* AppDelegate.m in Sources */,
+				961A77281D5C1FDF00EFA629 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		961A77381D5C1FDF00EFA629 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				961A77411D5C1FDF00EFA629 /* testFFMpegTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		961A77431D5C1FDF00EFA629 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				961A774C1D5C1FDF00EFA629 /* testFFMpegUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		961A773E1D5C1FDF00EFA629 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 961A77221D5C1FDF00EFA629 /* testFFMpeg */;
+			targetProxy = 961A773D1D5C1FDF00EFA629 /* PBXContainerItemProxy */;
+		};
+		961A77491D5C1FDF00EFA629 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 961A77221D5C1FDF00EFA629 /* testFFMpeg */;
+			targetProxy = 961A77481D5C1FDF00EFA629 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		961A772F1D5C1FDF00EFA629 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				961A77301D5C1FDF00EFA629 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		961A77341D5C1FDF00EFA629 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				961A77351D5C1FDF00EFA629 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		961A774E1D5C1FDF00EFA629 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		961A774F1D5C1FDF00EFA629 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		961A77511D5C1FDF00EFA629 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_ON_DEMAND_RESOURCES = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/LIb/ffmpeg/include\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavcodec\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavdevice\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavfilter\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavformat\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavutil\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libswresample\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libswscale\"",
+					"\"$(SRCROOT)/../ffmpeg/ffmpeg\"",
+				);
+				INFOPLIST_FILE = testFFMpeg/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpeg;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ffmpeg/ffmpeg\"";
+			};
+			name = Debug;
+		};
+		961A77521D5C1FDF00EFA629 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_ON_DEMAND_RESOURCES = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/LIb/ffmpeg/include\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavcodec\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavdevice\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavfilter\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavformat\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libavutil\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libswresample\"",
+					"\"$(SRCROOT)/LIb/ffmpeg/include/libswscale\"",
+					"\"$(SRCROOT)/../ffmpeg/ffmpeg\"",
+				);
+				INFOPLIST_FILE = testFFMpeg/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpeg;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ffmpeg/ffmpeg\"";
+			};
+			name = Release;
+		};
+		961A77541D5C1FDF00EFA629 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = testFFMpegTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpegTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testFFMpeg.app/testFFMpeg";
+			};
+			name = Debug;
+		};
+		961A77551D5C1FDF00EFA629 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = testFFMpegTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpegTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testFFMpeg.app/testFFMpeg";
+			};
+			name = Release;
+		};
+		961A77571D5C1FDF00EFA629 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = testFFMpegUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpegUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = testFFMpeg;
+			};
+			name = Debug;
+		};
+		961A77581D5C1FDF00EFA629 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = testFFMpegUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpegUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = testFFMpeg;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		961A771E1D5C1FDF00EFA629 /* Build configuration list for PBXProject "testFFMpeg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				961A774E1D5C1FDF00EFA629 /* Debug */,
+				961A774F1D5C1FDF00EFA629 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		961A77501D5C1FDF00EFA629 /* Build configuration list for PBXNativeTarget "testFFMpeg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				961A77511D5C1FDF00EFA629 /* Debug */,
+				961A77521D5C1FDF00EFA629 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		961A77531D5C1FDF00EFA629 /* Build configuration list for PBXNativeTarget "testFFMpegTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				961A77541D5C1FDF00EFA629 /* Debug */,
+				961A77551D5C1FDF00EFA629 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		961A77561D5C1FDF00EFA629 /* Build configuration list for PBXNativeTarget "testFFMpegUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				961A77571D5C1FDF00EFA629 /* Debug */,
+				961A77581D5C1FDF00EFA629 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 961A771B1D5C1FDF00EFA629 /* Project object */;
+}
