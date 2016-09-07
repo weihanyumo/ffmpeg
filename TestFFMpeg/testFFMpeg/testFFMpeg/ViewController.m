@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "ffmpeg.h"
-
+#import "muxing.h"
 #define CacheFolder @"cacheFolder"
 #define MP4Prefix @"recordFileName"
 
@@ -45,7 +45,11 @@
     [self.btnDownload setEnabled:YES];
 }
 
-
+- (IBAction)btnMUXClicked:(id)sender
+{
+    NSString *outFile = [self getFilePath];
+    muxing([outFile UTF8String]);
+}
 #pragma mark - test
 
 -(ffmpeg*)peg
@@ -82,9 +86,11 @@
         filePath = NSTemporaryDirectory();
         filePath = [filePath stringByAppendingPathComponent:CacheFolder];
         //不存在则创建
-        if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        {
             BOOL isSuccess = [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
-            if (isSuccess == YES) {
+            if (isSuccess == YES)
+            {
                 filePath = [self createFile:filePath];
             }else{
                 filePath = nil;

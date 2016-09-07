@@ -12,7 +12,6 @@
 		961A772E1D5C1FDF00EFA629 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A772D1D5C1FDF00EFA629 /* ViewController.m */; };
 		961A77311D5C1FDF00EFA629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961A772F1D5C1FDF00EFA629 /* Main.storyboard */; };
 		961A77331D5C1FDF00EFA629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961A77321D5C1FDF00EFA629 /* Assets.xcassets */; };
-		961A77361D5C1FDF00EFA629 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961A77341D5C1FDF00EFA629 /* LaunchScreen.storyboard */; };
 		961A77411D5C1FDF00EFA629 /* testFFMpegTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A77401D5C1FDF00EFA629 /* testFFMpegTests.m */; };
 		961A774C1D5C1FDF00EFA629 /* testFFMpegUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 961A774B1D5C1FDF00EFA629 /* testFFMpegUITests.m */; };
 		961A79241D5C4E0000EFA629 /* libffmpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A791A1D5C2BB200EFA629 /* libffmpeg.a */; };
@@ -54,7 +53,6 @@
 		961A772D1D5C1FDF00EFA629 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		961A77301D5C1FDF00EFA629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		961A77321D5C1FDF00EFA629 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		961A77351D5C1FDF00EFA629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		961A77371D5C1FDF00EFA629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		961A773C1D5C1FDF00EFA629 /* testFFMpegTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testFFMpegTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		961A77401D5C1FDF00EFA629 /* testFFMpegTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testFFMpegTests.m; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 				961A772D1D5C1FDF00EFA629 /* ViewController.m */,
 				961A772F1D5C1FDF00EFA629 /* Main.storyboard */,
 				961A77321D5C1FDF00EFA629 /* Assets.xcassets */,
-				961A77341D5C1FDF00EFA629 /* LaunchScreen.storyboard */,
 				961A77371D5C1FDF00EFA629 /* Info.plist */,
 				961A77261D5C1FDF00EFA629 /* Supporting Files */,
 			);
@@ -298,7 +295,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				961A77361D5C1FDF00EFA629 /* LaunchScreen.storyboard in Resources */,
 				961A77331D5C1FDF00EFA629 /* Assets.xcassets in Resources */,
 				961A77311D5C1FDF00EFA629 /* Main.storyboard in Resources */,
 			);
@@ -369,14 +365,6 @@
 				961A77301D5C1FDF00EFA629 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		961A77341D5C1FDF00EFA629 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				961A77351D5C1FDF00EFA629 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
