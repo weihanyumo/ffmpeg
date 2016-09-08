@@ -261,7 +261,7 @@ static int alloc_frame_buffer(MpegEncContext *s, Picture *pic)
     if (s->linesize && (s->linesize   != pic->f.linesize[0] ||
                         s->uvlinesize != pic->f.linesize[1])) {
         av_log(s->avctx, AV_LOG_ERROR,
-               "get_buffer() failed (stride changed)\n");
+               "dhd_get_buffer() failed (stride changed)\n");
         ff_mpeg_unref_picture(s, pic);
         return -1;
     }

@@ -48,6 +48,7 @@
 - (IBAction)btnMUXClicked:(id)sender
 {
     NSString *outFile = [self getFilePath];
+    NSLog(outFile);
     muxing([outFile UTF8String]);
 }
 #pragma mark - test
