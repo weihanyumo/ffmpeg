@@ -377,8 +377,7 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st)
         if (!ret && got_packet && pkt.size)
         {
             pkt.stream_index = st->index;
-//            ret = av_interleaved_write_frame(oc, &pkt);
-            av_write_frame(oc, &pkt);
+            ret = av_interleaved_write_frame(oc, &pkt);
         }
         else
         {
@@ -455,6 +454,20 @@ void freeVideoStream(AVFormatContext* formatContext)
     }
 }
 
+void reSetContext(AVFormatContext *formatContext, AVCodecContext *c)
+{
+    avcodec_get_context_defaults3(c, video_codec);
+    c->codec_id = video_codec->id;
+    c->bit_rate = 400000;
+    c->width    = VIDEO_WIDTH;
+    c->height   = VIDEO_HEIGHT;
+    c->time_base.den = STREAM_FRAME_RATE;
+    c->time_base.num = 1;
+    c->gop_size      = 12;
+    c->pix_fmt       = STREAM_PIX_FMT;
+    open_video(formatContext, video_codec, video_st);
+
+}
 
 int muxing(char *filename)
 {
@@ -515,8 +528,7 @@ int muxing(char *filename)
                 AVCodecContext *c = video_st->codec;
                 VIDEO_WIDTH /=2;
                 VIDEO_HEIGHT /=2;
-                c->width = VIDEO_WIDTH;
-                c->height = VIDEO_HEIGHT;
+                reSetContext(formatContext, c);
             }
             write_video_frame(formatContext, video_st);
             frame->pts += av_rescale_q(1, video_st->codec->time_base, video_st->time_base);

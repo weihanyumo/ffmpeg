@@ -257,7 +257,8 @@ static int alloc_frame_buffer(MpegEncContext *s, Picture *pic)
             pic->hwaccel_picture_private = pic->hwaccel_priv_buf->data;
         }
     }
-
+    printf("MpegEncContext:%p\n", s);
+    printf("s->linessize:%d pic->f.linesize[0]:%d s->uvlinesize:%d pic->f.linesize[1]:%d\n", s->linesize, pic->f.linesize[0], s->uvlinesize, pic->f.linesize[1]);
     if (s->linesize && (s->linesize   != pic->f.linesize[0] ||
                         s->uvlinesize != pic->f.linesize[1])) {
         av_log(s->avctx, AV_LOG_ERROR,
