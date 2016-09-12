@@ -111,8 +111,8 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     }
 
     t     = 0;
-    tincr = 2 * M_PI * 55.0 / c->sample_rate;
-    tincr2 = 2 * M_PI * 55.0 / c->sample_rate / c->sample_rate;
+    tincr = 2 * M_PI * 5.0 / c->sample_rate;
+    tincr2 = 2 * M_PI * 5.0 / c->sample_rate / c->sample_rate;
     
     src_nb_samples = c->codec->capabilities & CODEC_CAP_VARIABLE_FRAME_SIZE ?
     10000 : c->frame_size;
@@ -523,7 +523,7 @@ int muxing(char *filename)
         }
         else
         {
-            if (frame_count == 500)
+            if (frame_count == 300)
             {
                 AVCodecContext *c = video_st->codec;
                 VIDEO_WIDTH /=2;
