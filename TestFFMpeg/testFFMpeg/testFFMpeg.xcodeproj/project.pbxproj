@@ -18,6 +18,17 @@
 		961A79381D5C528000EFA629 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79371D5C528000EFA629 /* libbz2.1.0.tbd */; };
 		961A793A1D5C529100EFA629 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */; };
 		961A793C1D5C52A600EFA629 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */; };
+		96B2491A1DAA1A3A00EFDE86 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249141DAA1A3A00EFDE86 /* EAGLView.m */; };
+		96B2491B1DAA1A3A00EFDE86 /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249161DAA1A3A00EFDE86 /* ES2Renderer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		96B2491C1DAA1A3A00EFDE86 /* shaders.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249191DAA1A3A00EFDE86 /* shaders.m */; };
+		96B2491F1DAA1AA700EFDE86 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B2491E1DAA1AA700EFDE86 /* OpenGLES.framework */; };
+		96B249211DAA1AC700EFDE86 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B249201DAA1AC700EFDE86 /* GLKit.framework */; };
+		96B249231DAA1AF500EFDE86 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B249221DAA1AF500EFDE86 /* libstdc++.tbd */; };
+		96B249251DAA1B7400EFDE86 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B249241DAA1B7400EFDE86 /* UIKit.framework */; };
+		96B249271DAA1B7B00EFDE86 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B249261DAA1B7B00EFDE86 /* QuartzCore.framework */; };
+		96B249291DAA1C4900EFDE86 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B249281DAA1C4900EFDE86 /* CoreFoundation.framework */; };
+		96B2492B1DAA1E1900EFDE86 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B2492A1DAA1E1900EFDE86 /* CoreGraphics.framework */; };
+		96B2492D1DAA1FAF00EFDE86 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B2492C1DAA1FAF00EFDE86 /* libc++.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +75,21 @@
 		961A79371D5C528000EFA629 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
 		961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		96B249131DAA1A3A00EFDE86 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		96B249141DAA1A3A00EFDE86 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		96B249151DAA1A3A00EFDE86 /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
+		96B249161DAA1A3A00EFDE86 /* ES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES2Renderer.m; sourceTree = "<group>"; };
+		96B249171DAA1A3A00EFDE86 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
+		96B249181DAA1A3A00EFDE86 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaders.h; sourceTree = "<group>"; };
+		96B249191DAA1A3A00EFDE86 /* shaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = shaders.m; sourceTree = "<group>"; };
+		96B2491E1DAA1AA700EFDE86 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		96B249201DAA1AC700EFDE86 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		96B249221DAA1AF500EFDE86 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		96B249241DAA1B7400EFDE86 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		96B249261DAA1B7B00EFDE86 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		96B249281DAA1C4900EFDE86 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		96B2492A1DAA1E1900EFDE86 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		96B2492C1DAA1FAF00EFDE86 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +97,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96B2492D1DAA1FAF00EFDE86 /* libc++.tbd in Frameworks */,
+				96B249231DAA1AF500EFDE86 /* libstdc++.tbd in Frameworks */,
+				96B2492B1DAA1E1900EFDE86 /* CoreGraphics.framework in Frameworks */,
+				96B249291DAA1C4900EFDE86 /* CoreFoundation.framework in Frameworks */,
+				96B249271DAA1B7B00EFDE86 /* QuartzCore.framework in Frameworks */,
+				96B249251DAA1B7400EFDE86 /* UIKit.framework in Frameworks */,
+				96B249211DAA1AC700EFDE86 /* GLKit.framework in Frameworks */,
+				96B2491F1DAA1AA700EFDE86 /* OpenGLES.framework in Frameworks */,
 				961A793C1D5C52A600EFA629 /* libz.1.2.5.tbd in Frameworks */,
 				961A793A1D5C529100EFA629 /* libiconv.2.4.0.tbd in Frameworks */,
 				961A79381D5C528000EFA629 /* libbz2.1.0.tbd in Frameworks */,
@@ -120,6 +154,7 @@
 		961A77251D5C1FDF00EFA629 /* testFFMpeg */ = {
 			isa = PBXGroup;
 			children = (
+				96B249121DAA1A3A00EFDE86 /* ESGLView */,
 				961A77291D5C1FDF00EFA629 /* AppDelegate.h */,
 				961A772A1D5C1FDF00EFA629 /* AppDelegate.m */,
 				961A772C1D5C1FDF00EFA629 /* ViewController.h */,
@@ -169,11 +204,33 @@
 		961A793E1D5C546A00EFA629 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96B2492C1DAA1FAF00EFDE86 /* libc++.tbd */,
+				96B249221DAA1AF500EFDE86 /* libstdc++.tbd */,
+				96B2492A1DAA1E1900EFDE86 /* CoreGraphics.framework */,
+				96B249281DAA1C4900EFDE86 /* CoreFoundation.framework */,
+				96B249261DAA1B7B00EFDE86 /* QuartzCore.framework */,
+				96B249241DAA1B7400EFDE86 /* UIKit.framework */,
+				96B249201DAA1AC700EFDE86 /* GLKit.framework */,
+				96B2491E1DAA1AA700EFDE86 /* OpenGLES.framework */,
 				961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */,
 				961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */,
 				961A79371D5C528000EFA629 /* libbz2.1.0.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		96B249121DAA1A3A00EFDE86 /* ESGLView */ = {
+			isa = PBXGroup;
+			children = (
+				96B249131DAA1A3A00EFDE86 /* EAGLView.h */,
+				96B249141DAA1A3A00EFDE86 /* EAGLView.m */,
+				96B249151DAA1A3A00EFDE86 /* ES2Renderer.h */,
+				96B249161DAA1A3A00EFDE86 /* ES2Renderer.m */,
+				96B249171DAA1A3A00EFDE86 /* ESRenderer.h */,
+				96B249181DAA1A3A00EFDE86 /* shaders.h */,
+				96B249191DAA1A3A00EFDE86 /* shaders.m */,
+			);
+			path = ESGLView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,8 +378,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96B2491B1DAA1A3A00EFDE86 /* ES2Renderer.m in Sources */,
 				961A772E1D5C1FDF00EFA629 /* ViewController.m in Sources */,
+				96B2491A1DAA1A3A00EFDE86 /* EAGLView.m in Sources */,
 				961A772B1D5C1FDF00EFA629 /* AppDelegate.m in Sources */,
+				96B2491C1DAA1A3A00EFDE86 /* shaders.m in Sources */,
 				961A77281D5C1FDF00EFA629 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,6 +531,7 @@
 					"\"$(SRCROOT)/LIb/ffmpeg/include/libswresample\"",
 					"\"$(SRCROOT)/LIb/ffmpeg/include/libswscale\"",
 					"\"$(SRCROOT)/../ffmpeg/ffmpeg\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/testFFMpeg-epyauinamjdzlvfkqmaulvwcnplp/Build/Products/Debug-iphonesimulator/include/ffmpeg\"",
 				);
 				INFOPLIST_FILE = testFFMpeg/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -502,6 +563,7 @@
 					"\"$(SRCROOT)/LIb/ffmpeg/include/libswresample\"",
 					"\"$(SRCROOT)/LIb/ffmpeg/include/libswscale\"",
 					"\"$(SRCROOT)/../ffmpeg/ffmpeg\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/testFFMpeg-epyauinamjdzlvfkqmaulvwcnplp/Build/Products/Debug-iphonesimulator/include/ffmpeg\"",
 				);
 				INFOPLIST_FILE = testFFMpeg/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

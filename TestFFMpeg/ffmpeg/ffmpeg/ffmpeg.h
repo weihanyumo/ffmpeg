@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class PBVideoFrame;
 
 @interface ffmpeg : NSObject
 
@@ -14,7 +15,7 @@
 @property (nonatomic, assign)NSInteger fileSize;
 @property (nonatomic, assign)BOOL      isCancelled;
 
-- (void)doHlsToMP4:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t))progress;
+- (void)doHlsToMP4:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t, PBVideoFrame *frame))progress;
 
 - (void)cancelDownload;
 @end

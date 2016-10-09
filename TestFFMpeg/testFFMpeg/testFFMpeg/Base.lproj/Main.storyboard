@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VqA-LF-bJT">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <rect key="frame" x="123" y="311" width="151" height="30"/>
                                 <color key="backgroundColor" red="0.39501352089490682" green="1" blue="0.098513508728114041" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Download">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -30,8 +30,17 @@
                                     <action selector="btnDownloadClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yxA-fi-5ey"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ij-Ny-5X5">
+                                <rect key="frame" x="94" y="373" width="132" height="30"/>
+                                <state key="normal" title="MUXING">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnMUXClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ilE-NH-BZw"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p5g-Sm-n4o">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <rect key="frame" x="124" y="350" width="158" height="25"/>
                                 <color key="backgroundColor" red="1" green="0.04539349833516737" blue="0.15770355841937334" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="0.16373062568746011" green="1" blue="0.12491587668388981" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,15 +50,6 @@
                                 </variation>
                                 <connections>
                                     <action selector="btnCancelClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rav-Pw-Ng2"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ij-Ny-5X5">
-                                <rect key="frame" x="94" y="373" width="132" height="30"/>
-                                <state key="normal" title="MUXING">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="btnMUXClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ilE-NH-BZw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -74,7 +74,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="22" y="-23"/>
+            <point key="canvasLocation" x="-246" y="-327"/>
         </scene>
     </scenes>
 </document>

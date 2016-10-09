@@ -24,6 +24,8 @@
 		961A79341D5C50A600EFA629 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79331D5C50A600EFA629 /* CoreMedia.framework */; };
 		96349CB11D7E978100BDFFF8 /* muxing.m in Sources */ = {isa = PBXBuildFile; fileRef = 96349CB01D7E978100BDFFF8 /* muxing.m */; };
 		96349CB21D7E99EB00BDFFF8 /* muxing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96349CAF1D7E978100BDFFF8 /* muxing.h */; };
+		96B249391DAA259700EFDE86 /* PBVideoSwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */; };
+		96B2493A1DAA2D1C00EFDE86 /* PBVideoSwDecoder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +35,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				96B2493A1DAA2D1C00EFDE86 /* PBVideoSwDecoder.h in CopyFiles */,
 				96349CB21D7E99EB00BDFFF8 /* muxing.h in CopyFiles */,
 				961A77CC1D5C28F900EFA629 /* ffmpeg.h in CopyFiles */,
 			);
@@ -139,6 +142,8 @@
 		961A79351D5C524000EFA629 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		96349CAF1D7E978100BDFFF8 /* muxing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = muxing.h; sourceTree = "<group>"; };
 		96349CB01D7E978100BDFFF8 /* muxing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = muxing.m; sourceTree = "<group>"; };
+		96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBVideoSwDecoder.h; sourceTree = "<group>"; };
+		96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBVideoSwDecoder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +190,7 @@
 		961A77CA1D5C28F900EFA629 /* ffmpeg */ = {
 			isa = PBXGroup;
 			children = (
+				96B249361DAA251700EFDE86 /* decoder */,
 				961A77D41D5C296900EFA629 /* Lib */,
 				961A77CB1D5C28F900EFA629 /* ffmpeg.h */,
 				961A77CD1D5C28F900EFA629 /* ffmpeg.m */,
@@ -381,6 +387,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		96B249361DAA251700EFDE86 /* decoder */ = {
+			isa = PBXGroup;
+			children = (
+				96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */,
+				96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */,
+			);
+			path = decoder;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -437,6 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96B249391DAA259700EFDE86 /* PBVideoSwDecoder.m in Sources */,
 				961A77CE1D5C28F900EFA629 /* ffmpeg.m in Sources */,
 				96349CB11D7E978100BDFFF8 /* muxing.m in Sources */,
 			);
@@ -542,6 +558,9 @@
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libswresample\"",
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libswscale\"",
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include\"",
+					"\"$(SRCROOT)/ffmpeg/decoder\"",
+					"\"$(SRCROOT)/ffmpeg/decoder\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/testFFMpeg-epyauinamjdzlvfkqmaulvwcnplp/Build/Products/Debug-iphonesimulator/include/ffmpeg\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -570,6 +589,9 @@
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libswresample\"",
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libswscale\"",
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include\"",
+					"\"$(SRCROOT)/ffmpeg/decoder\"",
+					"\"$(SRCROOT)/ffmpeg/decoder\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/testFFMpeg-epyauinamjdzlvfkqmaulvwcnplp/Build/Products/Debug-iphonesimulator/include/ffmpeg\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (

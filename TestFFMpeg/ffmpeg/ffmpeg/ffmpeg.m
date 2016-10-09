@@ -10,6 +10,9 @@
 
 #import "avformat.h"
 #import "avcodec.h"
+#import "PBVideoSwDecoder.h"
+
+#define WRITE_MP4 0
 
 @interface ffmpeg()
 {
@@ -20,15 +23,16 @@
 @end
 @implementation ffmpeg
 
-- (void)doHlsToMP4:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t))progress
+- (void)doHlsToMP4:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t, PBVideoFrame *frame))progress
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self download:inputPath outputPath:outputPath progress:progress];
     });
 }
 
-- (void)download:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t))progress
+- (void)download:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t, PBVideoFrame *frame))progress
 {
+    PBVideoSwDecoder *decoder = [[PBVideoSwDecoder alloc]initWithDelegate:NULL];
     preNeedChangeFlagV = 0;
     preNeedChangeFlagA = 0;
     self.isCancelled = NO;
@@ -50,49 +54,53 @@
     {
         if (progress)
         {
-            progress(-1);
+            progress(-1, NULL);
         }
         return;
     }
     
     av_register_all();
     avformat_network_init();
-    //Input
-    if ((ret = avformat_open_input(&ifmt_ctx, [inputPath UTF8String], 0, 0)) < 0) {
+    if ((ret = avformat_open_input(&ifmt_ctx, [inputPath UTF8String], 0, 0)) < 0)
+    {
         printf( "Could not open input file.");
         goto end;
     }
-    if ((ret = avformat_find_stream_info(ifmt_ctx, 0)) < 0) {
+    if ((ret = avformat_find_stream_info(ifmt_ctx, 0)) < 0)
+    {
         printf( "Failed to retrieve input stream information");
         goto end;
     }
     av_dump_format(ifmt_ctx, 0, [inputPath UTF8String], 0);
-    //Output
     avformat_alloc_output_context2(&ofmt_ctx, NULL, NULL, [outputPath UTF8String]);
-    if (!ofmt_ctx) {
+    if (!ofmt_ctx)
+    {
         printf( "Could not create output context\n");
         ret = AVERROR_UNKNOWN;
         goto end;
     }
     ofmt = ofmt_ctx->oformat;
     
-    for (i = 0; i < ifmt_ctx->nb_streams; i++) {
-        //Create output AVStream according to input AVStream
+    for (i = 0; i < ifmt_ctx->nb_streams; i++)
+    {
         AVStream *in_stream = ifmt_ctx->streams[i];
         AVStream *out_stream = avformat_new_stream(ofmt_ctx, in_stream->codec->codec);
-        if (!out_stream) {
+        if (!out_stream)
+        {
             printf( "Failed allocating output stream\n");
             ret = AVERROR_UNKNOWN;
             goto end;
         }
-        //Copy the settings of AVCodecContext
-        if ((ret = avcodec_copy_context(out_stream->codec, in_stream->codec)) < 0) {
+        if ((ret = avcodec_copy_context(out_stream->codec, in_stream->codec)) < 0)
+        {
             printf( "Failed to copy context from input to output stream codec context\n");
             goto end;
         }
         out_stream->codec->codec_tag = 0;
         if (ofmt_ctx->oformat->flags & AVFMT_GLOBALHEADER)
+        {
             out_stream->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
+        }
         
         if(ifmt_ctx->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO && audioIndex == -1)
         {
@@ -103,12 +111,12 @@
             videoIndex = i;
         }
     }
-    //Output information------------------
     av_dump_format(ofmt_ctx, 0, [outputPath UTF8String], 1);
-    //Open output file
-    if (!(ofmt->flags & AVFMT_NOFILE)) {
+    if (!(ofmt->flags & AVFMT_NOFILE))
+    {
         ret = avio_open(&ofmt_ctx->pb, [outputPath UTF8String], AVIO_FLAG_WRITE);
-        if (ret < 0) {
+        if (ret < 0)
+        {
             printf( "Could not open output file '%s'", [outputPath UTF8String]);
             goto end;
         }
@@ -116,19 +124,20 @@
     
     AVBitStreamFilterContext* aacbsfc =  av_bitstream_filter_init("aac_adtstoasc");
     total_millis = (int32_t)((ifmt_ctx->duration*1000)/AV_TIME_BASE);
-    
-    //Write file header
-    if ((ret = avformat_write_header(ofmt_ctx, NULL)) < 0) {
+#if WRITE_MP4
+    if ((ret = avformat_write_header(ofmt_ctx, NULL)) < 0)
+    {
         printf( "Error occurred when opening output file\n");
         goto end;
     }
+#endif
     
     last_percent = 0;
     percent = 0;
-    if (progress) {
-        progress(0);
+    if (progress)
+    {
+        progress(0,NULL);
     }
-    
     
     AVDictionary *dict = ifmt_ctx->programs[0]->metadata;
     AVFrame *pFrame = avcodec_alloc_frame();
@@ -140,13 +149,15 @@
         NSLog(@"no codec");
     }
     
-    while (true) {
+    while (true)
+    {
         AVStream *in_stream, *out_stream;
-        //Get an AVPacket
         readFrameRet = av_read_frame(ifmt_ctx, &pkt);
-        if (readFrameRet < 0){
-            if (progress) {
-                progress(100);
+        if (readFrameRet < 0)
+        {
+            if (progress)
+            {
+                progress(100, NULL);
             }
             break;
         }
@@ -156,22 +167,21 @@
         av_bitstream_filter_filter(aacbsfc, out_stream->codec, NULL, &pkt.data, &pkt.size, pkt.data, pkt.size, 0);
         if (pkt.stream_index == videoIndex)
         {
-//            printf("stream_index:%1d dts:%8lld pts:%8lld delta:%lld in_stream.start_time:%8lld pktPos:%lld, duration:%d\n", pkt.stream_index, pkt.dts, pkt.pts, pkt.pts - preVideoTS, in_stream->start_time, pkt.pos, pkt.duration);
-            
-            ///
             ret = avcodec_decode_video2(video_dec_ctx, pFrame, &got_picture, &pkt);
-            ///
-            
-            
             percent = (unsigned int)((pkt.pts - in_stream->start_time)*1000*100/in_stream->time_base.den)/total_millis;
-//            printf("\npercentXXX: %d\n", percent);
-            if ((percent > last_percent) && (percent < 100)) {
-                if (progress) {
-                    progress(percent);
+            if ((percent >= last_percent) && (percent < 100))
+            {
+                if (progress)
+                {
+                    PBVideoFrame *pvFrame = [decoder decodePackeg:&pkt];
+                    progress(percent, pvFrame);//TODO
                 }
-            }else if((percent > last_percent) && (percent >= 100)){
-                if (progress) {
-                    progress(99);
+            }
+            else if((percent > last_percent) && (percent >= 100))
+            {
+                if (progress)
+                {
+                    progress(99, NULL);
                 }
             }
             last_percent = percent;
@@ -184,10 +194,6 @@
         //speed
         _speed += pkt.size;
         _fileSize += pkt.size;
-        
-        //Convert PTS/DTS
-        //start from 0
-        
         if(pkt.stream_index == audioIndex)
         {
             if (first_out_stream_ts_audio == 0)
@@ -245,38 +251,46 @@
             av_free_packet(&pkt);
             continue;
         }
-        //Write
-        if ((ret = av_interleaved_write_frame(ofmt_ctx, &pkt)) < 0) {
+#if WRITE_MP4
+        if ((ret = av_interleaved_write_frame(ofmt_ctx, &pkt)) < 0)
+        {
             printf("Error muxing packet\n");
-            if (progress) {
-                progress(-1);
+            if (progress)
+            {
+                progress(-1, NULL);
             }
             break;
         }
-//        printf("Write %8d frames to output file\n",frame_index);
+#endif
         av_free_packet(&pkt);
         frame_index++;
         
-        if (_isCancelled) {
+        if (_isCancelled)
+        {
             break;
         }
     }
-    //Write file trailer
+#if WRITE_MP4
     av_write_trailer(ofmt_ctx);
+#endif
 end:
-    if (ret < 0) {
-        if (progress) {
-            progress(-1);
+    if (ret < 0)
+    {
+        if (progress)
+        {
+            progress(-1, NULL);
         }
     }
-    if (ifmt_ctx != NULL) {
+    if (ifmt_ctx != NULL)
+    {
         avformat_close_input(&ifmt_ctx);
     }
-    /* close output */
-    if (ofmt_ctx && !(ofmt->flags & AVFMT_NOFILE)){
+    if (ofmt_ctx && !(ofmt->flags & AVFMT_NOFILE))
+    {
         avio_close(ofmt_ctx->pb);
     }
-    if (ofmt_ctx != NULL) {
+    if (ofmt_ctx != NULL)
+    {
         avformat_free_context(ofmt_ctx);
     }
     
@@ -287,4 +301,6 @@ end:
 {
     self.isCancelled = YES;
 }
+
+
 @end
