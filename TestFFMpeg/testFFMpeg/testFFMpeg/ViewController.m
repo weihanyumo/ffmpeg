@@ -22,9 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    int val = hls_need_change_time("abcS01.s");
-    int val2 = hls_need_change_time("abcS00.s");
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -65,6 +62,8 @@
 - (void)testHLS
 {
     NSString *url = @"http://api.xiaoyi.com/v4/cloud/index.m3u8?expire=1470982114&code=AE5BA8BB08764A11E97166108418BA5471C2CC741602FADD33D47A79A5C610B6396C5B72BACE688190C80E49CC433193F327D7867BAE649BEDE8B40422F561ED4B4ACA4C2F73B9FDFC9FDF8D9FA9458453B5120BE5B1F3433D8D91EB60DFF712&hmac=by79v2iTiKWLgMABOelGglYRihg%3D";
+    url = @"http://api.xiaoyi.com/v4/cloud/index.m3u8?expire=1475985106&code=CE47E539CDFCAFB22BFADA41605AF3CFDA9471E973F32249D382AA45B68A613EA0FAAE9CACC70897A3F86CBD25AC3BCD6B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=V2%2F4Apsx9FBIxi4TuzD35jKIMC0%3D";
+    
     NSString *outFile = [self getFilePath];
     [self.peg doHlsToMP4:url outputPath:outFile progress:^(int32_t val) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -126,14 +125,4 @@
     return filePath;
 }
 
-static int hls_need_change_time(const char *filename)
-{
-    char *flag = "S01.";
-    if (strstr(filename, flag))
-    {
-        return 1;
-    }
-    
-    return 0;
-}
 @end
