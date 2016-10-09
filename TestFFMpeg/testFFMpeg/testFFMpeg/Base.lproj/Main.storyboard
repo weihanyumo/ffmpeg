@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,9 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VqA-LF-bJT">
-                                <rect key="frame" x="123" y="311" width="151" height="30"/>
-                                <color key="backgroundColor" red="0.39501352089490682" green="1" blue="0.098513508728114041" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CF-Ov-POl">
+                                <rect key="frame" x="85" y="49" width="151" height="30"/>
+                                <color key="backgroundColor" red="0.39501352090000003" green="1" blue="0.098513508730000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="9dk-wx-kCz"/>
+                                </constraints>
                                 <state key="normal" title="Download">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -27,11 +31,30 @@
                                     <rect key="frame" x="46" y="37" width="208" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="btnDownloadClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yxA-fi-5ey"/>
+                                    <action selector="btnDownloadClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zAR-lh-NlO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ij-Ny-5X5">
-                                <rect key="frame" x="94" y="373" width="132" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSy-LN-Cta">
+                                <rect key="frame" x="81" y="92" width="158" height="25"/>
+                                <color key="backgroundColor" red="1" green="0.045393498339999998" blue="0.1577035584" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="8qv-l1-Cd6"/>
+                                </constraints>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.16373062569999999" green="1" blue="0.1249158767" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="46" y="175" width="208" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="btnCancelClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="n69-DN-viL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ij-Ny-5X5">
+                                <rect key="frame" x="94" y="136" width="132" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="nRc-qT-UC0"/>
+                                </constraints>
                                 <state key="normal" title="MUXING">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -39,37 +62,23 @@
                                     <action selector="btnMUXClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ilE-NH-BZw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p5g-Sm-n4o">
-                                <rect key="frame" x="124" y="350" width="158" height="25"/>
-                                <color key="backgroundColor" red="1" green="0.04539349833516737" blue="0.15770355841937334" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.16373062568746011" green="1" blue="0.12491587668388981" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="46" y="175" width="208" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="btnCancelClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rav-Pw-Ng2"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="VqA-LF-bJT"/>
-                                <exclude reference="p5g-Sm-n4o"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="VqA-LF-bJT"/>
-                                <include reference="p5g-Sm-n4o"/>
-                            </mask>
-                        </variation>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="5Ij-Ny-5X5" secondAttribute="trailing" constant="74" id="3rs-PE-zDM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8CF-Ov-POl" secondAttribute="trailing" constant="64" id="959-fw-0IA"/>
+                            <constraint firstItem="5Ij-Ny-5X5" firstAttribute="top" secondItem="CSy-LN-Cta" secondAttribute="bottom" constant="19" id="BaD-pg-niG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CSy-LN-Cta" secondAttribute="trailing" constant="61" id="BnA-mS-YSR"/>
+                            <constraint firstItem="8CF-Ov-POl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="65" id="JlJ-Yn-rcj"/>
+                            <constraint firstItem="8CF-Ov-POl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="29" id="Lgg-YI-9M7"/>
+                            <constraint firstItem="CSy-LN-Cta" firstAttribute="top" secondItem="8CF-Ov-POl" secondAttribute="bottom" constant="13" id="MaV-rv-TP2"/>
+                            <constraint firstItem="CSy-LN-Cta" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="61" id="RAr-ew-Ch1"/>
+                            <constraint firstItem="5Ij-Ny-5X5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="74" id="gye-QZ-YW4"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="btnDownload" destination="VqA-LF-bJT" id="1Ld-S6-lRP"/>
+                        <outlet property="btnDownload" destination="8CF-Ov-POl" id="F5A-57-mwQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
