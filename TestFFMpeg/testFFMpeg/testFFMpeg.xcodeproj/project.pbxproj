@@ -53,6 +53,13 @@
 			remoteGlobalIDString = 961A77C81D5C28F900EFA629;
 			remoteInfo = ffmpeg;
 		};
+		966E2E931DAB36F00031B13F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 961A79151D5C2BB200EFA629 /* ffmpeg.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 961A77C71D5C28F900EFA629;
+			remoteInfo = ffmpeg;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -247,6 +254,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				966E2E941DAB36F00031B13F /* PBXTargetDependency */,
 			);
 			name = testFFMpeg;
 			productName = testFFMpeg;
@@ -415,6 +423,11 @@
 			isa = PBXTargetDependency;
 			target = 961A77221D5C1FDF00EFA629 /* testFFMpeg */;
 			targetProxy = 961A77481D5C1FDF00EFA629 /* PBXContainerItemProxy */;
+		};
+		966E2E941DAB36F00031B13F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ffmpeg;
+			targetProxy = 966E2E931DAB36F00031B13F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -226,6 +226,9 @@
         }
         else
         {
+            if(pkt.stream_index == videoIndex)
+            printf("stream_index:%1d dts:%8lld pts:%8lld delta:%lld in_stream.start_time:%8lld pktPos:%lld, duration:%d\n", pkt.stream_index, pkt.dts, pkt.pts, pkt.pts - preAudioTS, in_stream->start_time, pkt.pos, pkt.duration);
+            
             if (first_out_stream_ts_video == 0)
             {
                 first_out_stream_ts_video = pkt.dts;
@@ -252,7 +255,7 @@
             continue;
         }
 #if WRITE_MP4
-        if ((ret = av_interleaved_write_frame(ofmt_ctx, &pkt)) < 0)
+       if ((ret = av_interleaved_write_frame(ofmt_ctx, &pkt)) < 0)
         {
             printf("Error muxing packet\n");
             if (progress)
