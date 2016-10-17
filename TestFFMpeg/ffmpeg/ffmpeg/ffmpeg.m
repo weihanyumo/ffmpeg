@@ -62,6 +62,7 @@
     
     av_register_all();
     avformat_network_init();
+    printf([inputPath UTF8String]);
     if ((ret = avformat_open_input(&ifmt_ctx, [inputPath UTF8String], 0, 0)) < 0)
     {
         printf( "Could not open input file.");
