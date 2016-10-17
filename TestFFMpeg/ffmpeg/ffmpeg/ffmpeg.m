@@ -12,7 +12,7 @@
 #import "avcodec.h"
 #import "PBVideoSwDecoder.h"
 
-#define WRITE_MP4 0
+#define WRITE_MP4 1
 
 @interface ffmpeg()
 {
@@ -26,6 +26,7 @@
 - (void)doHlsToMP4:(NSString *)inputPath outputPath:(NSString *)outputPath progress:(void (^)(int32_t, PBVideoFrame *frame))progress
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"%@", outputPath);
         [self download:inputPath outputPath:outputPath progress:progress];
     });
 }
@@ -165,6 +166,8 @@
         out_stream = ofmt_ctx->streams[pkt.stream_index];
         
         av_bitstream_filter_filter(aacbsfc, out_stream->codec, NULL, &pkt.data, &pkt.size, pkt.data, pkt.size, 0);
+//        if(pkt.stream_index == videoIndex)
+            printf("stream_index:%1d dts:%8lld pts:%8lld delta:%lld in_stream.start_time:%8lld pktPos:%lld, duration:%d\n", pkt.stream_index, pkt.dts, pkt.pts, pkt.pts - preAudioTS, in_stream->start_time, pkt.pos, pkt.duration);
         if (pkt.stream_index == videoIndex)
         {
             ret = avcodec_decode_video2(video_dec_ctx, pFrame, &got_picture, &pkt);
@@ -226,8 +229,7 @@
         }
         else
         {
-            if(pkt.stream_index == videoIndex)
-            printf("stream_index:%1d dts:%8lld pts:%8lld delta:%lld in_stream.start_time:%8lld pktPos:%lld, duration:%d\n", pkt.stream_index, pkt.dts, pkt.pts, pkt.pts - preAudioTS, in_stream->start_time, pkt.pos, pkt.duration);
+            
             
             if (first_out_stream_ts_video == 0)
             {

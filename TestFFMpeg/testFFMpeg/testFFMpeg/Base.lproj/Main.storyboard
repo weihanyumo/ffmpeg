@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11535.1" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11523"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,75 +19,83 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CF-Ov-POl">
-                                <rect key="frame" x="85" y="49" width="151" height="30"/>
-                                <color key="backgroundColor" red="0.39501352090000003" green="1" blue="0.098513508730000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CF-Ov-POl">
+                                <rect key="frame" x="81" y="89" width="214" height="30"/>
+                                <color key="backgroundColor" red="0.39501352090000003" green="1" blue="0.098513508730000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="9dk-wx-kCz"/>
                                 </constraints>
                                 <state key="normal" title="Download">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="46" y="37" width="208" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="btnDownloadClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zAR-lh-NlO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSy-LN-Cta">
-                                <rect key="frame" x="81" y="92" width="158" height="25"/>
-                                <color key="backgroundColor" red="1" green="0.045393498339999998" blue="0.1577035584" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSy-LN-Cta">
+                                <rect key="frame" x="77" y="132" width="221" height="25"/>
+                                <color key="backgroundColor" red="1" green="0.045393498339999998" blue="0.1577035584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="8qv-l1-Cd6"/>
                                 </constraints>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.16373062569999999" green="1" blue="0.1249158767" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.16373062569999999" green="1" blue="0.1249158767" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="46" y="175" width="208" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="btnCancelClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="n69-DN-viL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ij-Ny-5X5">
-                                <rect key="frame" x="94" y="136" width="132" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ij-Ny-5X5">
+                                <rect key="frame" x="90" y="176" width="195" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="nRc-qT-UC0"/>
                                 </constraints>
                                 <state key="normal" title="MUXING">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="btnMUXClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ilE-NH-BZw"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bWw-IT-FIA">
+                                <rect key="frame" x="77" y="28" width="282" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="M3U:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-Ga-cjd">
+                                <rect key="frame" x="16" y="33" width="68" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="5Ij-Ny-5X5" secondAttribute="trailing" constant="74" id="3rs-PE-zDM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8CF-Ov-POl" secondAttribute="trailing" constant="64" id="959-fw-0IA"/>
                             <constraint firstItem="5Ij-Ny-5X5" firstAttribute="top" secondItem="CSy-LN-Cta" secondAttribute="bottom" constant="19" id="BaD-pg-niG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CSy-LN-Cta" secondAttribute="trailing" constant="61" id="BnA-mS-YSR"/>
                             <constraint firstItem="8CF-Ov-POl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="65" id="JlJ-Yn-rcj"/>
-                            <constraint firstItem="8CF-Ov-POl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="29" id="Lgg-YI-9M7"/>
+                            <constraint firstItem="8CF-Ov-POl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="69" id="Lgg-YI-9M7"/>
                             <constraint firstItem="CSy-LN-Cta" firstAttribute="top" secondItem="8CF-Ov-POl" secondAttribute="bottom" constant="13" id="MaV-rv-TP2"/>
                             <constraint firstItem="CSy-LN-Cta" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="61" id="RAr-ew-Ch1"/>
                             <constraint firstItem="5Ij-Ny-5X5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="74" id="gye-QZ-YW4"/>
                         </constraints>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="btnDownload" destination="8CF-Ov-POl" id="F5A-57-mwQ"/>
+                        <outlet property="textUrl" destination="bWw-IT-FIA" id="FlZ-Hm-1jP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246" y="-327"/>
+            <point key="canvasLocation" x="-599.20000000000005" y="-323.38830584707648"/>
         </scene>
     </scenes>
 </document>

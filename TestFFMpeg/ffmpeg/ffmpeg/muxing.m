@@ -255,6 +255,7 @@ static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     int pts = 0;
     AVCodecContext *c = st->codec;
 
+    ret = avcodec_close(c);
     ret = avcodec_open2(c, codec, NULL);
     if (ret < 0)
     {
@@ -456,6 +457,7 @@ void freeVideoStream(AVFormatContext* formatContext)
 
 void reSetContext(AVFormatContext *formatContext, AVCodecContext *c)
 {
+    int ret = 0;
     avcodec_get_context_defaults3(c, video_codec);
     c->codec_id = video_codec->id;
     c->bit_rate = 400000;
@@ -465,6 +467,7 @@ void reSetContext(AVFormatContext *formatContext, AVCodecContext *c)
     c->time_base.num = 1;
     c->gop_size      = 12;
     c->pix_fmt       = STREAM_PIX_FMT;
+    
     open_video(formatContext, video_codec, video_st);
 
 }
@@ -529,6 +532,8 @@ int muxing(char *filename)
                 VIDEO_WIDTH /=2;
                 VIDEO_HEIGHT /=2;
                 reSetContext(formatContext, c);
+                
+                open_video(formatContext, c->codec, video_st);
             }
             write_video_frame(formatContext, video_st);
             frame->pts += av_rescale_q(1, video_st->codec->time_base, video_st->time_base);

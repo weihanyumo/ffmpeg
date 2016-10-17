@@ -23,6 +23,7 @@
 @property(nonatomic, strong) ffmpeg     *peg;
 @property (nonatomic, strong) IBOutlet UIButton  *btnDownload;
 @property (nonatomic, strong) EAGLView *eaglView;
+@property (nonatomic, strong) IBOutlet UITextField *textUrl;
 
 @end
 
@@ -91,9 +92,15 @@
 
 - (void)testHLS
 {
-    NSString *url = @"http://api.xiaoyi.com/v4/cloud/index.m3u8?expire=1470982114&code=AE5BA8BB08764A11E97166108418BA5471C2CC741602FADD33D47A79A5C610B6396C5B72BACE688190C80E49CC433193F327D7867BAE649BEDE8B40422F561ED4B4ACA4C2F73B9FDFC9FDF8D9FA9458453B5120BE5B1F3433D8D91EB60DFF712&hmac=by79v2iTiKWLgMABOelGglYRihg%3D";
-    url = @"http://api.xiaoyi.com/v4/cloud/index.m3u8?expire=1476069113&code=7C341E1F12E6AFC9CD6CE4164E7A1A9126BD3741313E84512FF75CE1AD9E3BF37FB90B5924DC3AE224D396A50142D3176B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=09MU5Rm06IiqX0nTIVwitMucTU8%3D";
-    
+    NSString *url = @"http://api.xiaoyi.com/v4/cloud/index.m3u8?expire=1476168958&code=D9FFF5680ED248F5022CC9C390A824C7354A7510347D804D2E65712AC8893865FCE3033C00ACEE7945EF439B6BCDF0AA6B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=BIF6T9xwkYmEb2ADKp7WpOtrsX0%3D";
+    if (self.textUrl.text.length < 10)
+    {
+        return;
+    }
+    else
+    {
+        url = self. textUrl.text;
+    }
     NSString *outFile = [self getFilePath];
     [self.peg doHlsToMP4:url outputPath:outFile progress:^(int32_t val, PBVideoFrame *frame) {
         dispatch_async(dispatch_get_main_queue(), ^{
