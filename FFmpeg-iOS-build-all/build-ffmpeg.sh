@@ -2,7 +2,7 @@
 
 # directories
 SOURCE="ffmpeg-2.0.2"
-FAT="FFmpeg-iOS"
+FAT="Fat"
 
 SCRATCH="scratch"
 # must be an absolute path
@@ -15,7 +15,8 @@ THIN=`pwd`/"thin"
 
 CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --disable-programs \
                  --disable-doc --enable-pic --enable-nonfree --disable-decoders --enable-decoder=h264 \
-                --enable-decoder=mpeg4 --enable-decoder=aac --disable-encoders"
+                --enable-decoder=mpeg4 --enable-decoder=aac --disable-encoders --enable-encoder=h264 \
+                --enable-encoder=mpeg4 --enable-encoder=aac --enable-logging "
 
 if [ "$X264" ]
 then

@@ -29,15 +29,15 @@ static AVStream *add_stream(AVFormatContext *oc, AVCodec **codec,
     *codec = avcodec_find_encoder(codec_id);
     if (!(*codec))
     {
-        fprintf(stderr, "Could not find encoder for '%s'\n", avcodec_get_name(codec_id));
-        exit(1);
+        printf( "Could not find encoder for '%s'\n", avcodec_get_name(codec_id));
+        return NULL;
     }
     
     st = avformat_new_stream(oc, *codec);
     if (!st)
     {
-        fprintf(stderr, "Could not allocate stream\n");
-        exit(1);
+        printf("Could not allocate stream\n");
+        return NULL;
     }
     st->id = oc->nb_streams-1;
     c = st->codec;
@@ -106,8 +106,8 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     ret = avcodec_open2(c, codec, &opts);
     if (ret < 0)
     {
-        fprintf(stderr, "Could not open audio codec: %s\n", av_err2str(ret));
-        exit(1);
+        printf("Could not open audio codec: %s\n", av_err2str(ret));
+        return;
     }
 
     t     = 0;
@@ -120,8 +120,8 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     ret = av_samples_alloc_array_and_samples(&src_samples_data, &src_samples_linesize, c->channels, src_nb_samples, c->sample_fmt, 0);
     if (ret < 0)
     {
-        fprintf(stderr, "Could not allocate source samples\n");
-        exit(1);
+        printf("Could not allocate source samples\n");
+        return;
     }
     
     if (c->sample_fmt != AV_SAMPLE_FMT_S16)
@@ -129,8 +129,8 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
         swr_ctx = swr_alloc();
         if (!swr_ctx)
         {
-            fprintf(stderr, "Could not allocate resampler context\n");
-            exit(1);
+            printf( "Could not allocate resampler context\n");
+            return;
         }
         av_opt_set_int       (swr_ctx, "in_channel_count",   c->channels,       0);
         av_opt_set_int       (swr_ctx, "in_sample_rate",     c->sample_rate,    0);
@@ -140,8 +140,8 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
         av_opt_set_sample_fmt(swr_ctx, "out_sample_fmt",     c->sample_fmt,     0);
     
         if ((ret = swr_init(swr_ctx)) < 0) {
-            fprintf(stderr, "Failed to initialize the resampling context\n");
-            exit(1);
+            printf("Failed to initialize the resampling context\n");
+            return;
         }
     }
 
@@ -150,8 +150,8 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
                                              max_dst_nb_samples, c->sample_fmt, 0);
     if (ret < 0)
     {
-        fprintf(stderr, "Could not allocate destination samples\n");
-        exit(1);
+        printf("Could not allocate destination samples\n");
+        return;
     }
     dst_samples_size = av_samples_get_buffer_size(NULL, c->channels, max_dst_nb_samples, c->sample_fmt, 0);
 }
@@ -172,7 +172,7 @@ static void get_audio_frame(int16_t *samples, int frame_size, int nb_channels)
     }
 }
 
-static void write_audio_frame(AVFormatContext *oc, AVStream *st)
+static int write_audio_frame(AVFormatContext *oc, AVStream *st)
 {
     AVCodecContext *c;
     AVPacket pkt = { 0 }; // data and size must be 0;
@@ -192,7 +192,7 @@ static void write_audio_frame(AVFormatContext *oc, AVStream *st)
             av_free(dst_samples_data[0]);
             ret = av_samples_alloc(dst_samples_data, &dst_samples_linesize, c->channels, dst_nb_samples, c->sample_fmt, 0);
             if (ret < 0)
-                exit(1);
+                return 0;
             max_dst_nb_samples = dst_nb_samples;
             dst_samples_size = av_samples_get_buffer_size(NULL, c->channels, dst_nb_samples, c->sample_fmt, 0);
         }
@@ -200,8 +200,8 @@ static void write_audio_frame(AVFormatContext *oc, AVStream *st)
         ret = swr_convert(swr_ctx, dst_samples_data, dst_nb_samples, (const uint8_t **)src_samples_data, src_nb_samples);
         if (ret < 0)
         {
-            fprintf(stderr, "Error while converting\n");
-            exit(1);
+            printf("Error while converting\n");
+            return 0;
         }
     }
     else
@@ -216,22 +216,23 @@ static void write_audio_frame(AVFormatContext *oc, AVStream *st)
     ret = avcodec_encode_audio2(c, &pkt, frame, &got_packet);
     if (ret < 0)
     {
-        fprintf(stderr, "Error encoding audio frame: %s\n", av_err2str(ret));
-        exit(1);
+        printf("Error encoding audio frame: %s\n", av_err2str(ret));
+        return 0;
     }
     
     if (!got_packet)
-        return;
+        return 0;
     
     pkt.stream_index = st->index;
 
     ret = av_interleaved_write_frame(oc, &pkt);
     if (ret != 0) {
-        fprintf(stderr, "Error while writing audio frame: %s\n",
+        printf( "Error while writing audio frame: %s\n",
                 av_err2str(ret));
-        exit(1);
+        return 0;
     }
     avcodec_free_frame(&frame);
+    return  1;
 }
 
 static void close_audio(AVFormatContext *oc, AVStream *st)
@@ -259,8 +260,8 @@ static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     ret = avcodec_open2(c, codec, NULL);
     if (ret < 0)
     {
-        fprintf(stderr, "Could not open video codec: %s\n", av_err2str(ret));
-        exit(1);
+        printf("Could not open video codec: %s\n", av_err2str(ret));
+        return;
     }
     if (frame)
     {
@@ -272,15 +273,15 @@ static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     frame->pts = pts;
     if (!frame)
     {
-        fprintf(stderr, "Could not allocate video frame\n");
-        exit(1);
+        printf("Could not allocate video frame\n");
+        return;
     }
     
     ret = avpicture_alloc(&dst_picture, c->pix_fmt, c->width, c->height);
     if (ret < 0)
     {
-        fprintf(stderr, "Could not allocate picture: %s\n", av_err2str(ret));
-        exit(1);
+        printf( "Could not allocate picture: %s\n", av_err2str(ret));
+        return;
     }
 
     if (c->pix_fmt != AV_PIX_FMT_YUV420P)
@@ -288,8 +289,8 @@ static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
         ret = avpicture_alloc(&src_picture, AV_PIX_FMT_YUV420P, c->width, c->height);
         if (ret < 0)
         {
-            fprintf(stderr, "Could not allocate temporary picture: %s\n", av_err2str(ret));
-            exit(1);
+            printf( "Could not allocate temporary picture: %s\n", av_err2str(ret));
+            return;
         }
     }
     *((AVPicture *)frame) = dst_picture;
@@ -338,7 +339,7 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st)
                                          sws_flags, NULL, NULL, NULL);
                 if (!sws_ctx)
                 {
-                    fprintf(stderr, "Could not initialize the conversion context\n");
+                    printf( "Could not initialize the conversion context\n");
                     exit(1);
                 }
             }
@@ -387,8 +388,8 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st)
     }
     if (ret != 0)
     {
-        fprintf(stderr, "Error while writing video frame: %s\n", av_err2str(ret));
-        exit(1);
+        printf( "Error while writing video frame: %s\n", av_err2str(ret));
+        return;
     }
     frame_count++;
 }
@@ -498,7 +499,7 @@ int muxing(char *filename)
         ret = avio_open(&formatContext->pb, filename, AVIO_FLAG_WRITE);
         if (ret < 0)
         {
-            fprintf(stderr, "Could not open '%s': %s\n", filename,
+            printf("Could not open '%s': %s\n", filename,
                     av_err2str(ret));
             return 1;
         }
@@ -506,8 +507,7 @@ int muxing(char *filename)
     ret = avformat_write_header(formatContext, NULL);
     if (ret < 0)
     {
-        fprintf(stderr, "Error occurred when opening output file: %s\n",
-                av_err2str(ret));
+        printf( "Error occurred when opening output file: %s\n", av_err2str(ret));
         return 1;
     }
    
