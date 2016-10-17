@@ -153,4 +153,7 @@ then
 	cp -rf $THIN/$1/include $FAT
 fi
 
+rm -r $THIN
+rm -r $SCRATCH
+
 echo Done
