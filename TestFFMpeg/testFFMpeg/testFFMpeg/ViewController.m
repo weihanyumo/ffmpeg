@@ -64,7 +64,6 @@
 - (IBAction)btnDownloadClicked:(UIButton *)btn
 {
     [self testHLS];
-    [btn setEnabled:NO];
 }
 
 - (IBAction)btnCancelClicked:(id)sender
@@ -92,10 +91,10 @@
 
 - (void)testHLS
 {
-    NSString *url = @"http://api.xiaoyi.com/v4/cloud/index.m3u8?expire=1476168958&code=D9FFF5680ED248F5022CC9C390A824C7354A7510347D804D2E65712AC8893865FCE3033C00ACEE7945EF439B6BCDF0AA6B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=BIF6T9xwkYmEb2ADKp7WpOtrsX0%3D";
+    NSString *url = @"https://home-interface-test.mi-ae.com/v4/cloud/index.m3u8?expire=1476778051&code=E30AB095BFAE8EA8EF5E823F9D405F0BED44E9EBB2A165EE38F9AA2F463B54CDB8182830D4A9F8C4265BF590DF58057A19F695D2E37F391D46122201DA2EF4C3459CCD92083D913BA9E3F5B7B5A0C464FDAFF43149774201A64DD7C9C3D7EFD2&hmac=HvkiYuv1a49Lf5IAtEH00yS8c2Q%3D";
     if (self.textUrl.text.length < 10)
     {
-        return;
+        NSLog(@"no file");
     }
     else
     {
@@ -104,6 +103,7 @@
     NSString *outFile = [self getFilePath];
     [self.peg doHlsToMP4:url outputPath:outFile progress:^(int32_t val, PBVideoFrame *frame) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            [_btnDownload setEnabled:NO];
             int per = val >= 100 ? 100 : val;
             [_btnDownload setTitle:[NSString stringWithFormat:@"%3d%%", per] forState:UIControlStateNormal];
             

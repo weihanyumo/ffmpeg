@@ -1,58 +1,26 @@
 #!/bin/sh
 
-# directories
 SOURCE="ffmpeg-2.0.2"
 FAT="Fat"
-
 SCRATCH="scratch"
-# must be an absolute path
 THIN=`pwd`/"thin"
 
+ARCHS="arm64 armv7 armv7s x86_64 i386"
 # absolute path to x264 library
 #X264=`pwd`/fat-x264
+#--enable-logging
 
-#FDK_AAC=`pwd`/../fdk-aac-build-script-for-iOS/fdk-aac-ios
+CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-programs \
+                 --enable-openssl --disable-doc --enable-pic  \
+                 --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
+                 --disable-encoders --enable-encoder=h264--enable-encoder=mpeg4 --enable-encoder=aac "
 
-CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --disable-programs \
-                 --disable-doc --enable-pic --enable-nonfree --disable-decoders --enable-decoder=h264 \
-                --enable-decoder=mpeg4 --enable-decoder=aac --disable-encoders --enable-encoder=h264 \
-                --enable-encoder=mpeg4 --enable-encoder=aac --enable-logging "
 
-if [ "$X264" ]
-then
-	CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-gpl --enable-libx264"
-fi
-
-if [ "$FDK_AAC" ]
-then
-	CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-libfdk-aac"
-fi
-
-# avresample
-#CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
-
-ARCHS="arm64 armv7 armv7s x86_64 i386"
 
 COMPILE="y"
 LIPO="y"
 
 DEPLOYMENT_TARGET="6.0"
-
-if [ "$*" ]
-then
-	if [ "$*" = "lipo" ]
-	then
-		# skip compile
-		COMPILE=
-	else
-		ARCHS="$*"
-		if [ $# -eq 1 ]
-		then
-			# skip lipo
-			LIPO=
-		fi
-	fi
-fi
 
 if [ "$COMPILE" ]
 then
@@ -105,20 +73,11 @@ then
 		    fi
 		fi
 
+        CFLAGS="$CFLAGS -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
 		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
 		CC="xcrun -sdk $XCRUN_SDK clang"
 		CXXFLAGS="$CFLAGS"
 		LDFLAGS="$CFLAGS"
-		if [ "$X264" ]
-		then
-			CFLAGS="$CFLAGS -I$X264/include"
-			LDFLAGS="$LDFLAGS -L$X264/lib"
-		fi
-		if [ "$FDK_AAC" ]
-		then
-			CFLAGS="$CFLAGS -I$FDK_AAC/include"
-			LDFLAGS="$LDFLAGS -L$FDK_AAC/lib"
-		fi
 
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \
 		    --target-os=darwin \

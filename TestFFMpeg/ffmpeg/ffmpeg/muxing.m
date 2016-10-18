@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-
 #include <libavutil/opt.h>
 #include <libavutil/mathematics.h>
 #include <libavformat/avformat.h>
