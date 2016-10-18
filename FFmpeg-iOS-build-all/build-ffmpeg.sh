@@ -11,7 +11,7 @@ ARCHS="arm64 armv7 armv7s x86_64 i386"
 #--enable-logging
 
 CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-programs \
-                 --enable-openssl --disable-doc --enable-pic  \
+                 --disable-doc --enable-pic  \
                  --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
                  --disable-encoders --enable-encoder=h264--enable-encoder=mpeg4 --enable-encoder=aac "
 
