@@ -661,6 +661,7 @@ static int recheck_discard_flags(AVFormatContext *s, int first)
     return changed;
 }
 
+//DHD_TEST
 static int hls_need_change_time(char *filename)
 {
     if (!filename) {
@@ -706,17 +707,17 @@ start:
                     if (c->first_timestamp == AV_NOPTS_VALUE)
                         c->first_timestamp = var->pkt.dts;
                     
-                    var->pkt.needChangeTS = 0;
+                    var->pkt.discontinue = 0;
                     //DHD_TEST
                     if (var->cur_seq_no < var->n_segments)
                     {
                         struct segment *seg = var->segments[var->cur_seq_no];
-                        
                         ff_make_absolute_url(var->pkt.nameTS, sizeof(var->pkt.nameTS), 0, seg->url);
-                        if (hls_need_change_time(seg->url) == 1)
-                        {
-                            var->pkt.needChangeTS = 1;
-                        }
+                        var->pkt.discontinue = seg->discontinue;
+//                        if (hls_need_change_time(seg->url) == 1)
+//                        {
+//                            var->pkt.discontinue = 1;
+//                        }
                     }
                 }
 
