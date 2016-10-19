@@ -207,7 +207,7 @@ static void handle_key_args(struct key_info *info, const char *key,
 static int parse_playlist(HLSContext *c, const char *url,
                           struct variant *var, AVIOContext *in)
 {
-    int ret = 0, duration = 0, is_segment = 0, is_variant = 0, bandwidth = 0, is_discontinue = 0;
+    int ret = 0, duration = 0, is_segment = 0, is_variant = 0, bandwidth = 0, is_discontinue = 0, disNum = 0;
     enum KeyType key_type = KEY_NONE;
     uint8_t iv[16] = "";
     int has_iv = 0;
@@ -288,8 +288,9 @@ static int parse_playlist(HLSContext *c, const char *url,
         } else if (av_strstart(line, "#EXTINF:", &ptr)) {
             is_segment = 1;
             duration   = atoi(ptr);
-        } else if(av_strstart(line, "#EXT-X-DISCONTINUITY", &ptr)){
+        } else if(av_strstart(line, "#EXT-X-DISCONTINUITY", &ptr)){//DHD_TEST
             is_discontinue = 1;
+            disNum++;
             continue;
             //need todo
         }else if (av_strstart(line, "#", NULL)) {
@@ -328,7 +329,7 @@ static int parse_playlist(HLSContext *c, const char *url,
                 }
                 if (is_discontinue)
                 {
-                    seg->discontinue = 1;
+                    seg->discontinue = disNum;
                 }
                 is_discontinue = 0;
                 ff_make_absolute_url(seg->key, sizeof(seg->key), url, key);
