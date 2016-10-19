@@ -331,6 +331,11 @@ static int parse_playlist(HLSContext *c, const char *url,
                 {
                     seg->discontinue = disNum;
                 }
+                else
+                {
+                    seg->discontinue = 0;
+                    disNum = 0;
+                }
                 is_discontinue = 0;
                 ff_make_absolute_url(seg->key, sizeof(seg->key), url, key);
                 ff_make_absolute_url(seg->url, sizeof(seg->url), url, line);
