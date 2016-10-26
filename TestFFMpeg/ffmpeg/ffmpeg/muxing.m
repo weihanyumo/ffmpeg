@@ -14,8 +14,8 @@
 #define STREAM_FRAME_RATE 25
 #define STREAM_NB_FRAMES  ((int)(STREAM_DURATION * STREAM_FRAME_RATE))
 #define STREAM_PIX_FMT    AV_PIX_FMT_YUV420P
-static VIDEO_WIDTH = 400;
-static VIDEO_HEIGHT = 200;
+static int VIDEO_WIDTH = 400;
+static int VIDEO_HEIGHT = 200;
 
 static int sws_flags = SWS_BICUBIC;
 
