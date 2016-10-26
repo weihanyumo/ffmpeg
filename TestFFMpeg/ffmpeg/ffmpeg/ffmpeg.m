@@ -211,14 +211,14 @@
                 char *nameTS = pkt.nameTS;
                 printf(nameTS);
                 printf("\n");
-                if(preNeedChangeFlagA != pkt.needChangeTS)
+                if(preNeedChangeFlagA != pkt.discontinue)
 //                if (delta > 266679395)//need to find the flag when changed TS
                 {
                     long long preTime = preAudioTS - first_out_stream_ts_audio;
                     
                     first_out_stream_ts_audio = pkt.dts - preTime - pkt.duration;
                 }
-                preNeedChangeFlagA = pkt.needChangeTS;
+                preNeedChangeFlagA = pkt.discontinue;
             }
             preAudioTS = pkt.dts;
             

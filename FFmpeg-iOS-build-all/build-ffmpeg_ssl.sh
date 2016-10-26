@@ -10,8 +10,9 @@ ARCHS="arm64 armv7 armv7s x86_64 i386"
 #X264=`pwd`/fat-x264
 #--enable-logging
 
-CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-programs \
-                 --enable-openssl --disable-doc --enable-pic  \
+CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-doc --enable-pic \
+                 --disable-programs --disable-ffmpeg --disable-ffplay --disable-ffprobe --disable-ffserver \
+                 --enable-openssl\
                  --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
                  --disable-encoders --enable-encoder=h264 --enable-encoder=mpeg4 --enable-encoder=aac "
 
@@ -20,7 +21,7 @@ CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-n
 COMPILE="y"
 LIPO="y"
 
-DEPLOYMENT_TARGET="6.0"
+DEPLOYMENT_TARGET="7.0"
 
 if [ "$COMPILE" ]
 then

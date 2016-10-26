@@ -1117,7 +1117,7 @@ typedef struct AVPacket {
      */
     int64_t convergence_duration;
     
-    int needChangeTS;
+    int discontinue;//unuseful DHD_TODO!!!
     char nameTS[4096];
 } AVPacket;
 #define AV_PKT_FLAG_KEY     0x0001 ///< The packet contains a keyframe
