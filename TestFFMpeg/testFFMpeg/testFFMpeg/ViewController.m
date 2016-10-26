@@ -91,7 +91,7 @@
 
 - (void)testHLS
 {
-    NSString *url = @"https://home-interface-test.mi-ae.com/v4/cloud/index.m3u8?expire=1477453366&code=62CAFB1D5B9AF96DFAAF1C9840772033F84DB5A7D43175D672856D4444C980DAD29ADD4D64D982C0390652663EC28C24B5D520A5D151B96888EB63C50857ABF2ED6FB2C324FD40912730C33816FBD85CFDAFF43149774201A64DD7C9C3D7EFD2&hmac=Y9snAMVT8yMd593IG6BeLLvnsq4%3D";
+    NSString *url = @"https://home-interface-test.mi-ae.com/v4/cloud/index.m3u8?expire=1477465406&code=6E28FAFAA7EF445C28825FB8C5E1E7B571C2CC741602FADD33D47A79A5C610B6E33C8A472D3CAEEA42EF337A19C7C23C19F695D2E37F391D46122201DA2EF4C300EF752719ED7A57C019F70282F13273FDAFF43149774201A64DD7C9C3D7EFD2&hmac=RJEtUdUaJqhY%2F%2FePRUJzFfDHbNw%3D";
     if (self.textUrl.text.length < 10)
     {
         NSLog(@"no file");
@@ -101,9 +101,16 @@
         url = self. textUrl.text;
     }
     NSString *outFile = [self getFilePath];
+    
+    [_btnDownload setEnabled:NO];
     [self.peg doHlsToMP4:url outputPath:outFile progress:^(int32_t val, PBVideoFrame *frame) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_btnDownload setEnabled:NO];
+            if (val == -1)
+            {
+                [_btnDownload setTitle:@"Download" forState:UIControlStateNormal];
+                [_btnDownload setEnabled:YES];
+                return ;
+            }
             int per = val >= 100 ? 100 : val;
             [_btnDownload setTitle:[NSString stringWithFormat:@"%3d%%", per] forState:UIControlStateNormal];
             
@@ -122,6 +129,7 @@
             }
         });
     }];
+    [_btnDownload setEnabled:YES];
 }
 
 -(NSString*)getFilePath

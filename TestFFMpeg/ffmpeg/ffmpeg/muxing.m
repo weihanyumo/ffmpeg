@@ -468,6 +468,7 @@ void reSetContext(AVFormatContext *formatContext, AVCodecContext *c)
     c->gop_size      = 12;
     c->pix_fmt       = STREAM_PIX_FMT;
     
+    
     open_video(formatContext, video_codec, video_st);
 
 }
@@ -528,8 +529,8 @@ int muxing(char *filename)
             if (frame_count == 300)
             {
                 AVCodecContext *c = video_st->codec;
-                VIDEO_WIDTH /=2;
-                VIDEO_HEIGHT /=2;
+                VIDEO_WIDTH *=2;
+                VIDEO_HEIGHT *=2;
                 reSetContext(formatContext, c);
                 
                 open_video(formatContext, c->codec, video_st);
