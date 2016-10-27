@@ -16,7 +16,7 @@
 #define STREAM_PIX_FMT    AV_PIX_FMT_YUV420P
 static int VIDEO_WIDTH = 400;
 static int VIDEO_HEIGHT = 200;
-
+static int g_pts = 0;
 static int sws_flags = SWS_BICUBIC;
 
 static AVStream *add_stream(AVFormatContext *oc, AVCodec **codec,
@@ -92,6 +92,7 @@ int       dst_samples_linesize;
 int       dst_samples_size;
 
 struct SwrContext *swr_ctx = NULL;
+struct SwsContext *m_pSwsContext = NULL;
 
 static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
 {
@@ -99,7 +100,7 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     int ret;
     
     c = st->codec;
-
+    
     AVDictionary *opts = NULL;
     av_dict_set(&opts, "strict", "experimental", 0);
     ret = avcodec_open2(c, codec, &opts);
@@ -108,7 +109,7 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
         printf("Could not open audio codec: %s\n", av_err2str(ret));
         return;
     }
-
+    
     t     = 0;
     tincr = 2 * M_PI * 5.0 / c->sample_rate;
     tincr2 = 2 * M_PI * 5.0 / c->sample_rate / c->sample_rate;
@@ -137,13 +138,13 @@ static void open_audio(AVFormatContext *oc, AVCodec *codec, AVStream *st)
         av_opt_set_int       (swr_ctx, "out_channel_count",  c->channels,       0);
         av_opt_set_int       (swr_ctx, "out_sample_rate",    c->sample_rate,    0);
         av_opt_set_sample_fmt(swr_ctx, "out_sample_fmt",     c->sample_fmt,     0);
-    
+        
         if ((ret = swr_init(swr_ctx)) < 0) {
             printf("Failed to initialize the resampling context\n");
             return;
         }
     }
-
+    
     max_dst_nb_samples = src_nb_samples;
     ret = av_samples_alloc_array_and_samples(&dst_samples_data, &dst_samples_linesize, c->channels,
                                              max_dst_nb_samples, c->sample_fmt, 0);
@@ -182,7 +183,7 @@ static int write_audio_frame(AVFormatContext *oc, AVStream *st)
     c = st->codec;
     
     get_audio_frame((int16_t *)src_samples_data[0], src_nb_samples, c->channels);
-
+    
     if (swr_ctx)
     {
         dst_nb_samples = av_rescale_rnd(swr_get_delay(swr_ctx, c->sample_rate) + src_nb_samples, c->sample_rate, c->sample_rate, AV_ROUND_UP);
@@ -195,7 +196,7 @@ static int write_audio_frame(AVFormatContext *oc, AVStream *st)
             max_dst_nb_samples = dst_nb_samples;
             dst_samples_size = av_samples_get_buffer_size(NULL, c->channels, dst_nb_samples, c->sample_fmt, 0);
         }
-    
+        
         ret = swr_convert(swr_ctx, dst_samples_data, dst_nb_samples, (const uint8_t **)src_samples_data, src_nb_samples);
         if (ret < 0)
         {
@@ -223,11 +224,11 @@ static int write_audio_frame(AVFormatContext *oc, AVStream *st)
         return 0;
     
     pkt.stream_index = st->index;
-
+    
     ret = av_interleaved_write_frame(oc, &pkt);
     if (ret != 0) {
         printf( "Error while writing audio frame: %s\n",
-                av_err2str(ret));
+               av_err2str(ret));
         return 0;
     }
     avcodec_free_frame(&frame);
@@ -241,12 +242,10 @@ static void close_audio(AVFormatContext *oc, AVStream *st)
     av_free(dst_samples_data[0]);
 }
 
-static AVFrame *frame;
-
 AVStream *audio_st = NULL, *video_st = NULL;
 AVCodec *audio_codec = NULL, *video_codec = NULL;
 
-static AVPicture src_picture, dst_picture;
+static AVPicture src_picture;
 static int frame_count;
 
 static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
@@ -254,7 +253,7 @@ static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
     int ret;
     int pts = 0;
     AVCodecContext *c = st->codec;
-
+    
     ret = avcodec_close(c);
     ret = avcodec_open2(c, codec, NULL);
     if (ret < 0)
@@ -262,37 +261,37 @@ static void open_video(AVFormatContext *oc, AVCodec *codec, AVStream *st)
         printf("Could not open video codec: %s\n", av_err2str(ret));
         return;
     }
-    if (frame)
-    {
-        pts = frame->pts;
-        av_free(frame);
-        frame = NULL;
-    }
-    frame = avcodec_alloc_frame();
-    frame->pts = pts;
-    if (!frame)
-    {
-        printf("Could not allocate video frame\n");
-        return;
-    }
-    
-    ret = avpicture_alloc(&dst_picture, c->pix_fmt, c->width, c->height);
-    if (ret < 0)
-    {
-        printf( "Could not allocate picture: %s\n", av_err2str(ret));
-        return;
-    }
-
-    if (c->pix_fmt != AV_PIX_FMT_YUV420P)
-    {
-        ret = avpicture_alloc(&src_picture, AV_PIX_FMT_YUV420P, c->width, c->height);
-        if (ret < 0)
-        {
-            printf( "Could not allocate temporary picture: %s\n", av_err2str(ret));
-            return;
-        }
-    }
-    *((AVPicture *)frame) = dst_picture;
+    //    if (frame)
+    //    {
+    //        pts = frame->pts;
+    //        av_free(frame);
+    //        frame = NULL;
+    //    }
+    //    frame = avcodec_alloc_frame();
+    //    frame->pts = pts;
+    //    if (!frame)
+    //    {
+    //        printf("Could not allocate video frame\n");
+    //        return;
+    //    }
+    //
+    //    ret = avpicture_alloc(&dst_picture, c->pix_fmt, c->width, c->height);
+    //    if (ret < 0)
+    //    {
+    //        printf( "Could not allocate picture: %s\n", av_err2str(ret));
+    //        return;
+    //    }
+    //
+    //    if (c->pix_fmt != AV_PIX_FMT_YUV420P)
+    //    {
+    //        ret = avpicture_alloc(&src_picture, AV_PIX_FMT_YUV420P, c->width, c->height);
+    //        if (ret < 0)
+    //        {
+    //            printf( "Could not allocate temporary picture: %s\n", av_err2str(ret));
+    //            return;
+    //        }
+    //    }
+    //    *((AVPicture *)frame) = dst_picture;
 }
 
 static void fill_yuv_image(AVPicture *pict, int frame_index,
@@ -317,12 +316,67 @@ static void fill_yuv_image(AVPicture *pict, int frame_index,
         }
     }
 }
+int ScaleImg(AVCodecContext *pCodecCtx,AVFrame *src_picture,AVFrame *dst_picture,int nDstH ,int nDstW )
+{
+    int i ;
+    int nSrcStride[3];
+    int nDstStride[3];
+    int nSrcH = pCodecCtx->height;
+    int nSrcW = pCodecCtx->width;
+    struct SwsContext* m_pSwsContext;
+    
+    uint8_t *pSrcBuff[3] = {src_picture->data[0],src_picture->data[1], src_picture->data[2]};
+    
+    nSrcStride[0] = nSrcW ;
+    nSrcStride[1] = nSrcW/2 ;
+    nSrcStride[2] = nSrcW/2 ;
+    
+    dst_picture->linesize[0] = nDstW;
+    dst_picture->linesize[1] = nDstW / 2;
+    dst_picture->linesize[2] = nDstW / 2;
+    
+    if (nSrcW == nDstW && nSrcH == nDstH)
+    {
+        return 1;
+    }
+    printf("nSrcW%d\n",nSrcW);
+    
+    
+    m_pSwsContext = sws_getContext(nSrcW, nSrcH, PIX_FMT_YUV420P,
+                                   nDstW, nDstH, PIX_FMT_YUV420P,
+                                   SWS_BICUBIC,
+                                   NULL, NULL, NULL);
+    
+    
+    if (NULL == m_pSwsContext)
+    {
+        printf("ffmpeg get context error!\n");
+        return -1;
+    }
+    
+    
+    sws_scale(m_pSwsContext, src_picture->data,src_picture->linesize, 0, pCodecCtx->height,dst_picture->data,dst_picture->linesize);
+    
+    
+    printf("line0:%d line1:%d line2:%d\n",dst_picture->linesize[0] ,dst_picture->linesize[1] ,dst_picture->linesize[2]);
+    sws_freeContext(m_pSwsContext);
+    
+    
+    return 1 ;
+}
 
-static void write_video_frame(AVFormatContext *oc, AVStream *st)
+static void write_video_frame(AVFormatContext *oc, AVStream *st, int w, int h)
 {
     int ret;
     static struct SwsContext *sws_ctx;
     AVCodecContext *c = st->codec;
+    AVPicture dst_picture, src_picture;
+    ret = avpicture_alloc(&src_picture, c->pix_fmt, w, h);
+    ret = avpicture_alloc(&dst_picture, c->pix_fmt, w, h);
+    AVFrame *frame, *srcFrame;
+    
+    frame = avcodec_alloc_frame();
+    srcFrame = avcodec_alloc_frame();
     
     if (frame_count >= STREAM_NB_FRAMES)
     {
@@ -347,7 +401,9 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st)
         }
         else
         {
-            fill_yuv_image(&dst_picture, frame_count, c->width, c->height);
+            fill_yuv_image(&src_picture, frame_count, w, h);
+            
+            *((AVPicture *)srcFrame) = src_picture;
         }
     }
     
@@ -366,8 +422,21 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st)
         AVPacket pkt = { 0 };
         int got_packet;
         av_init_packet(&pkt);
-       
-        ret = avcodec_encode_video2(c, &pkt, frame, &got_packet);
+        if (w != VIDEO_WIDTH || h != VIDEO_HEIGHT)
+        {
+            fill_yuv_image(&dst_picture, frame_count, w, h);
+            *((AVPicture *)frame) = dst_picture;
+            
+            ScaleImg(c, srcFrame, frame, VIDEO_HEIGHT, VIDEO_WIDTH);
+            frame->pts = g_pts;
+            ret = avcodec_encode_video2(c, &pkt, frame, &got_packet);
+        }
+        else
+        {
+            srcFrame->pts = g_pts;
+            ret = avcodec_encode_video2(c, &pkt, srcFrame, &got_packet);
+        }
+        
         if (ret < 0)
         {
             printf("Error encoding video frame:\n");
@@ -391,15 +460,18 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st)
         return;
     }
     frame_count++;
+    
+    //    av_free(src_picture.data[0]);
+    av_free(dst_picture.data[0]);
+    
+    av_frame_free(&srcFrame);
+    av_frame_free(&frame);
+    
 }
 
 static void close_video(AVFormatContext *oc, AVStream *st)
 {
     avcodec_close(st->codec);
-    av_free(src_picture.data[0]);
-    av_free(dst_picture.data[0]);
-    av_free(frame);
-    frame = NULL;
 }
 
 void initStreams(AVFormatContext * formatContext)
@@ -455,30 +527,14 @@ void freeVideoStream(AVFormatContext* formatContext)
     }
 }
 
-void reSetContext(AVFormatContext *formatContext, AVCodecContext *c)
-{
-    int ret = 0;
-    avcodec_get_context_defaults3(c, video_codec);
-    c->codec_id = video_codec->id;
-    c->bit_rate = 400000;
-    c->width    = VIDEO_WIDTH;
-    c->height   = VIDEO_HEIGHT;
-    c->time_base.den = STREAM_FRAME_RATE;
-    c->time_base.num = 1;
-    c->gop_size      = 12;
-    c->pix_fmt       = STREAM_PIX_FMT;
-    
-    
-    open_video(formatContext, video_codec, video_st);
-
-}
-
 int muxing(char *filename)
 {
     AVOutputFormat *fmt;
     AVFormatContext *formatContext;
     double audio_time, video_time;
     int ret;
+    
+    g_pts = 0;
     
     av_register_all();
     avformat_alloc_output_context2(&formatContext, NULL, NULL, filename);
@@ -491,7 +547,7 @@ int muxing(char *filename)
         return 1;
     }
     fmt = formatContext->oformat;
-
+    
     initStreams(formatContext);
     
     if (!(fmt->flags & AVFMT_NOFILE))
@@ -500,7 +556,7 @@ int muxing(char *filename)
         if (ret < 0)
         {
             printf("Could not open '%s': %s\n", filename,
-                    av_err2str(ret));
+                   av_err2str(ret));
             return 1;
         }
     }
@@ -510,7 +566,7 @@ int muxing(char *filename)
         printf( "Error occurred when opening output file: %s\n", av_err2str(ret));
         return 1;
     }
-   
+    
     for (;;)
     {
         audio_time = audio_st ? audio_st->pts.val * av_q2d(audio_st->time_base) : 0.0;
@@ -519,24 +575,25 @@ int muxing(char *filename)
         if ((!audio_st || audio_time >= STREAM_DURATION) &&
             (!video_st || video_time >= STREAM_DURATION))
             break;
-
+        
         if (!video_st || (video_st && audio_st && audio_time < video_time))
         {
             write_audio_frame(formatContext, audio_st);
         }
         else
         {
-            if (frame_count == 300)
+            int w = VIDEO_WIDTH, h = VIDEO_HEIGHT;
+            if (frame_count >= 300)
             {
-                AVCodecContext *c = video_st->codec;
-                VIDEO_WIDTH *=2;
-                VIDEO_HEIGHT *=2;
-                reSetContext(formatContext, c);
+                //                AVCodecContext *c = video_st->codec;
+                w = VIDEO_WIDTH/2;
                 
-                open_video(formatContext, c->codec, video_st);
+                h = VIDEO_HEIGHT/2;
+                //
+                //                open_video(formatContext, c->codec, video_st);
             }
-            write_video_frame(formatContext, video_st);
-            frame->pts += av_rescale_q(1, video_st->codec->time_base, video_st->time_base);
+            write_video_frame(formatContext, video_st, w, h);
+            g_pts += av_rescale_q(1, video_st->codec->time_base, video_st->time_base);
         }
     }
     av_write_trailer(formatContext);
