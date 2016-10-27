@@ -316,51 +316,26 @@ static void fill_yuv_image(AVPicture *pict, int frame_index,
         }
     }
 }
-int ScaleImg(AVCodecContext *pCodecCtx,AVFrame *src_picture,AVFrame *dst_picture,int nDstH ,int nDstW )
+int ScaleImg(AVFrame *src_picture, AVFrame *dst_picture, int srcW, int srcH, int nDstW, int nDstH )
 {
-    int i ;
-    int nSrcStride[3];
-    int nDstStride[3];
-    int nSrcH = pCodecCtx->height;
-    int nSrcW = pCodecCtx->width;
     struct SwsContext* m_pSwsContext;
-    
-    uint8_t *pSrcBuff[3] = {src_picture->data[0],src_picture->data[1], src_picture->data[2]};
-    
-    nSrcStride[0] = nSrcW ;
-    nSrcStride[1] = nSrcW/2 ;
-    nSrcStride[2] = nSrcW/2 ;
     
     dst_picture->linesize[0] = nDstW;
     dst_picture->linesize[1] = nDstW / 2;
     dst_picture->linesize[2] = nDstW / 2;
-    
-    if (nSrcW == nDstW && nSrcH == nDstH)
-    {
-        return 1;
-    }
-    printf("nSrcW%d\n",nSrcW);
-    
-    
-    m_pSwsContext = sws_getContext(nSrcW, nSrcH, PIX_FMT_YUV420P,
+ 
+    m_pSwsContext = sws_getContext(srcW, srcH, PIX_FMT_YUV420P,
                                    nDstW, nDstH, PIX_FMT_YUV420P,
                                    SWS_BICUBIC,
                                    NULL, NULL, NULL);
-    
-    
     if (NULL == m_pSwsContext)
     {
         printf("ffmpeg get context error!\n");
         return -1;
     }
+    sws_scale(m_pSwsContext, src_picture->data,src_picture->linesize, 0, srcH, dst_picture->data,dst_picture->linesize);
     
-    
-    sws_scale(m_pSwsContext, src_picture->data,src_picture->linesize, 0, pCodecCtx->height,dst_picture->data,dst_picture->linesize);
-    
-    
-    printf("line0:%d line1:%d line2:%d\n",dst_picture->linesize[0] ,dst_picture->linesize[1] ,dst_picture->linesize[2]);
     sws_freeContext(m_pSwsContext);
-    
     
     return 1 ;
 }
@@ -372,7 +347,7 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st, int w, int h)
     AVCodecContext *c = st->codec;
     AVPicture dst_picture, src_picture;
     ret = avpicture_alloc(&src_picture, c->pix_fmt, w, h);
-    ret = avpicture_alloc(&dst_picture, c->pix_fmt, w, h);
+    ret = avpicture_alloc(&dst_picture, c->pix_fmt, VIDEO_WIDTH, VIDEO_HEIGHT);
     AVFrame *frame, *srcFrame;
     
     frame = avcodec_alloc_frame();
@@ -424,10 +399,10 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st, int w, int h)
         av_init_packet(&pkt);
         if (w != VIDEO_WIDTH || h != VIDEO_HEIGHT)
         {
-            fill_yuv_image(&dst_picture, frame_count, w, h);
+            fill_yuv_image(&dst_picture, frame_count, VIDEO_WIDTH, VIDEO_HEIGHT);
             *((AVPicture *)frame) = dst_picture;
             
-            ScaleImg(c, srcFrame, frame, VIDEO_HEIGHT, VIDEO_WIDTH);
+            ScaleImg(srcFrame, frame, w, h, VIDEO_WIDTH, VIDEO_HEIGHT);
             frame->pts = g_pts;
             ret = avcodec_encode_video2(c, &pkt, frame, &got_packet);
         }
@@ -585,12 +560,8 @@ int muxing(char *filename)
             int w = VIDEO_WIDTH, h = VIDEO_HEIGHT;
             if (frame_count >= 300)
             {
-                //                AVCodecContext *c = video_st->codec;
                 w = VIDEO_WIDTH/2;
-                
                 h = VIDEO_HEIGHT/2;
-                //
-                //                open_video(formatContext, c->codec, video_st);
             }
             write_video_frame(formatContext, video_st, w, h);
             g_pts += av_rescale_q(1, video_st->codec->time_base, video_st->time_base);
