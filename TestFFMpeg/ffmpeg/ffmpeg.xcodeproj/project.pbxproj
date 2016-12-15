@@ -144,6 +144,7 @@
 		96349CB01D7E978100BDFFF8 /* muxing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = muxing.m; sourceTree = "<group>"; };
 		96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBVideoSwDecoder.h; sourceTree = "<group>"; };
 		96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBVideoSwDecoder.m; sourceTree = "<group>"; };
+		96F772FB1DF00A0800CC4C8D /* PrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +197,7 @@
 				961A77CD1D5C28F900EFA629 /* ffmpeg.m */,
 				96349CAF1D7E978100BDFFF8 /* muxing.h */,
 				96349CB01D7E978100BDFFF8 /* muxing.m */,
+				96F772FB1DF00A0800CC4C8D /* PrefixHeader.h */,
 			);
 			path = ffmpeg;
 			sourceTree = "<group>";
@@ -568,6 +570,7 @@
 					"$(PROJECT_DIR)/ffmpeg/ffmpeg/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "-DTEST_PREFIX_HEADER";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -599,6 +602,7 @@
 					"$(PROJECT_DIR)/ffmpeg/ffmpeg/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "-DTEST_PREFIX_HEADER";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
