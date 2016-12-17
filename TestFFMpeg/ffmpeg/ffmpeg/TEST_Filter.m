@@ -19,7 +19,6 @@
 #include <libswscale/swscale.h>
 
 
-const char *filter_descr = "filter.png";
 
 static AVFormatContext *pFormatCtx;
 static AVCodecContext *pCodecCtx;
@@ -36,7 +35,9 @@ static int open_input_file(const char *filename)
     AVCodec *dec;
     
     if ((ret = avformat_open_input(&pFormatCtx, filename, NULL, NULL)) < 0) {
-        printf( "Cannot open input file\n");
+        char buf[1024];
+        av_strerror(ret, buf, 1024);
+        printf("Couldn't open file %s: %d(%s)", filename, ret, buf);
         return ret;
     }
     
@@ -121,7 +122,7 @@ static int init_filters(const char *filters_descr)
     return 0;
 }
 
-int filterFile(const char *inPutFile, const char*outPutFile)
+int filterFile(const char *inPutFile, const char* pngName, const char*outPutFile)
 {
     int ret;
     AVPacket packet;
@@ -135,7 +136,7 @@ int filterFile(const char *inPutFile, const char*outPutFile)
     
     if ((ret = open_input_file(inPutFile)) < 0)
         goto end;
-    if ((ret = init_filters(filter_descr)) < 0)
+    if ((ret = init_filters(pngName)) < 0)
         goto end;
     
     FILE *fp_yuv=fopen(outPutFile,"wb+");
@@ -202,7 +203,8 @@ end:
     avfilter_graph_free(&filter_graph);
     if (pCodecCtx)
         avcodec_close(pCodecCtx);
-    avformat_close_input(&pFormatCtx);
+    if (pFormatCtx)
+        avformat_close_input(&pFormatCtx);
     
     
     if (ret < 0 && ret != AVERROR_EOF) {

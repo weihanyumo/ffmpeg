@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-int filterFile(const char *inPutFile, const char*outPutFile);
+int filterFile(const char *inPutFile, const char* pngName, const char*outPutFile);
 
 
 #endif /* TEST_Filter_h */
