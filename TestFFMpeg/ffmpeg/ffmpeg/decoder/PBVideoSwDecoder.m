@@ -146,10 +146,6 @@
 
 -(PBVideoFrame *)decodePackeg:(AVPacket *)packet
 {
-//        int frameWidth = pvFrame.width;
-//       int  frameHeight = pvFrame.height;
-    
-    
     if(isFFMpegInit == NO)
     {
         if([self reinitFFMpeg] == NO)
@@ -158,7 +154,6 @@
     
     int gotLen = 0;
     int ret = avcodec_decode_video2(avCodecContext, avFrame, &gotLen, packet);
-    av_free_packet(packet);
     
     if (gotLen == 0 || ret <= 0)
     {

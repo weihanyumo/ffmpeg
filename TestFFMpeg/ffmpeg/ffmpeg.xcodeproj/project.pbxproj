@@ -24,6 +24,8 @@
 		961A79341D5C50A600EFA629 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79331D5C50A600EFA629 /* CoreMedia.framework */; };
 		96349CB11D7E978100BDFFF8 /* muxing.m in Sources */ = {isa = PBXBuildFile; fileRef = 96349CB01D7E978100BDFFF8 /* muxing.m */; };
 		96349CB21D7E99EB00BDFFF8 /* muxing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96349CAF1D7E978100BDFFF8 /* muxing.h */; };
+		9651261E1E04DE8800E82E2B /* TEST_Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651261C1E04DE8800E82E2B /* TEST_Filter.m */; };
+		9651261F1E04E18500E82E2B /* TEST_Filter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9651261D1E04DE8800E82E2B /* TEST_Filter.h */; };
 		96B249391DAA259700EFDE86 /* PBVideoSwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */; };
 		96B2493A1DAA2D1C00EFDE86 /* PBVideoSwDecoder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */; };
 /* End PBXBuildFile section */
@@ -35,6 +37,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				9651261F1E04E18500E82E2B /* TEST_Filter.h in CopyFiles */,
 				96B2493A1DAA2D1C00EFDE86 /* PBVideoSwDecoder.h in CopyFiles */,
 				96349CB21D7E99EB00BDFFF8 /* muxing.h in CopyFiles */,
 				961A77CC1D5C28F900EFA629 /* ffmpeg.h in CopyFiles */,
@@ -142,6 +145,8 @@
 		961A79351D5C524000EFA629 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		96349CAF1D7E978100BDFFF8 /* muxing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = muxing.h; sourceTree = "<group>"; };
 		96349CB01D7E978100BDFFF8 /* muxing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = muxing.m; sourceTree = "<group>"; };
+		9651261C1E04DE8800E82E2B /* TEST_Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TEST_Filter.m; sourceTree = "<group>"; };
+		9651261D1E04DE8800E82E2B /* TEST_Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TEST_Filter.h; sourceTree = "<group>"; };
 		96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBVideoSwDecoder.h; sourceTree = "<group>"; };
 		96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBVideoSwDecoder.m; sourceTree = "<group>"; };
 		96F772FB1DF00A0800CC4C8D /* PrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.h; sourceTree = "<group>"; };
@@ -198,6 +203,8 @@
 				96349CAF1D7E978100BDFFF8 /* muxing.h */,
 				96349CB01D7E978100BDFFF8 /* muxing.m */,
 				96F772FB1DF00A0800CC4C8D /* PrefixHeader.h */,
+				9651261D1E04DE8800E82E2B /* TEST_Filter.h */,
+				9651261C1E04DE8800E82E2B /* TEST_Filter.m */,
 			);
 			path = ffmpeg;
 			sourceTree = "<group>";
@@ -457,6 +464,7 @@
 				96B249391DAA259700EFDE86 /* PBVideoSwDecoder.m in Sources */,
 				961A77CE1D5C28F900EFA629 /* ffmpeg.m in Sources */,
 				96349CB11D7E978100BDFFF8 /* muxing.m in Sources */,
+				9651261E1E04DE8800E82E2B /* TEST_Filter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

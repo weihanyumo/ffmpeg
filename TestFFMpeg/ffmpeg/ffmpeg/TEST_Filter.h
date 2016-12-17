@@ -10,8 +10,13 @@
 #define TEST_Filter_h
 
 #include <stdio.h>
+#import <Foundation/Foundation.h>
+#import "PBVideoSwDecoder.h"
 
-int filterFile(const char *inPutFile, const char* pngName, const char*outPutFile);
+@interface myFilter : NSObject
+
+-(int) filterFile:(const char *)inPutFile :( const char* )pngName :(const char*)outPutFile  progress:(void (^)(int32_t per, PBVideoFrame *frame))progress;
+@end
 
 
 #endif /* TEST_Filter_h */

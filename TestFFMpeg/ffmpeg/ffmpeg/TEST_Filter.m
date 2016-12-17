@@ -19,6 +19,7 @@
 #include <libswscale/swscale.h>
 
 
+#import "PBVideoSwDecoder.h"
 
 static AVFormatContext *pFormatCtx;
 static AVCodecContext *pCodecCtx;
@@ -28,6 +29,8 @@ AVFilterGraph *filter_graph;
 static int video_stream_index = -1;
 
 
+
+@implementation myFilter
 
 static int open_input_file(const char *filename)
 {
@@ -76,7 +79,7 @@ static int init_filters(const char *filters_descr)
     AVBufferSinkParams *buffersink_params;
     
     filter_graph = avfilter_graph_alloc();
-    
+
     /* buffer video source: the decoded frames from the decoder will be inserted here. */
     snprintf(args, sizeof(args),
              "video_size=%dx%d:pix_fmt=%d:time_base=%d/%d:pixel_aspect=%d/%d",
@@ -84,8 +87,7 @@ static int init_filters(const char *filters_descr)
              pCodecCtx->time_base.num, pCodecCtx->time_base.den,
              pCodecCtx->sample_aspect_ratio.num, pCodecCtx->sample_aspect_ratio.den);
     
-    ret = avfilter_graph_create_filter(&buffersrc_ctx, buffersrc, "in",
-                                       args, NULL, filter_graph);
+    ret = avfilter_graph_create_filter(&buffersrc_ctx, buffersrc, "in", args, NULL, filter_graph);
     if (ret < 0) {
         printf("Cannot create buffer source\n");
         return ret;
@@ -94,13 +96,14 @@ static int init_filters(const char *filters_descr)
     /* buffer video sink: to terminate the filter chain. */
     buffersink_params = av_buffersink_params_alloc();
     buffersink_params->pixel_fmts = pix_fmts;
-    ret = avfilter_graph_create_filter(&buffersink_ctx, buffersink, "out",
-                                       NULL, buffersink_params, filter_graph);
+    ret = avfilter_graph_create_filter(&buffersink_ctx, buffersink, "out", NULL, buffersink_params, filter_graph);
     av_free(buffersink_params);
-    if (ret < 0) {
+    if (ret < 0)
+    {
         printf("Cannot create buffer sink\n");
         return ret;
     }
+    
     
     /* Endpoints for the filter graph. */
     outputs->name       = av_strdup("in");
@@ -112,9 +115,8 @@ static int init_filters(const char *filters_descr)
     inputs->filter_ctx = buffersink_ctx;
     inputs->pad_idx    = 0;
     inputs->next       = NULL;
-    
-    if ((ret = avfilter_graph_parse_ptr(filter_graph, filters_descr,
-                                        &inputs, &outputs, NULL)) < 0)
+
+    if ((ret = avfilter_graph_parse_ptr(filter_graph, filters_descr, &inputs, &outputs, NULL)) < 0)
         return ret;
     
     if ((ret = avfilter_graph_config(filter_graph, NULL)) < 0)
@@ -122,7 +124,7 @@ static int init_filters(const char *filters_descr)
     return 0;
 }
 
-int filterFile(const char *inPutFile, const char* pngName, const char*outPutFile)
+-(int) filterFile:(const char *)inPutFile :( const char* )pngName :(const char*)outPutFile  progress:(void (^)(int32_t per, PBVideoFrame *frame))progress
 {
     int ret;
     AVPacket packet;
@@ -136,7 +138,10 @@ int filterFile(const char *inPutFile, const char* pngName, const char*outPutFile
     
     if ((ret = open_input_file(inPutFile)) < 0)
         goto end;
-    if ((ret = init_filters(pngName)) < 0)
+    char filters[1024] = {0};
+    sprintf(filters, "movie=%s[wm];[in][wm]overlay=5:5[out]", pngName);
+
+    if ((ret = init_filters(filters)) < 0)
         goto end;
     
     FILE *fp_yuv=fopen(outPutFile,"wb+");
@@ -175,10 +180,18 @@ int filterFile(const char *inPutFile, const char* pngName, const char*outPutFile
                     ret = av_buffersink_get_frame(buffersink_ctx, pFrame_out);
                     if (ret < 0)
                         break;
-                    
+    
                     printf("Process 1 frame!\n");
+                    if(progress)
+                    {
+                        
+                        PBVideoFrame *pvFrame = [self getVideoFrme:pFrame_out :pFrame_out->width :pFrame_out->height];
+                        
+                        progress(1, pvFrame);
+                    }
                     
-                    if (pFrame_out->format==AV_PIX_FMT_YUV420P) {
+                    if (pFrame_out->format==AV_PIX_FMT_YUV420P)
+                    {
                         //Y, U, V
                         for(int i=0;i<pFrame_out->height;i++){
                             fwrite(pFrame_out->data[0]+pFrame_out->linesize[0]*i,1,pFrame_out->width,fp_yuv);
@@ -216,3 +229,46 @@ end:
     
     return 0;  
 }
+
+-(PBVideoFrame*)getVideoFrme:(AVFrame*)avFrame :(int)vwidth :(int)vheight
+{
+    static  char *yuvBuffer;
+    if(!yuvBuffer)
+    {
+        yuvBuffer = (unsigned char *)malloc(1024*1024*3);
+    }
+    unsigned char *bufferOffset = yuvBuffer;
+    
+    int dataLength = 0;
+    
+    int width = MIN(avFrame->linesize[0], vwidth);
+    int size = width * vheight;
+    memcpy(yuvBuffer, avFrame->data[0], size);
+    bufferOffset += size;
+    dataLength += size;
+    
+    width = MIN(avFrame->linesize[1], vwidth/2);
+    size = width * (vheight / 2);
+    memcpy(bufferOffset, avFrame->data[1],size);
+    bufferOffset += size;
+    dataLength += size;
+    
+    width = MIN(avFrame->linesize[2], vwidth/2);
+    size = width *(vheight / 2);
+    memcpy(bufferOffset, avFrame->data[2],size);
+    bufferOffset += size;
+    dataLength += size;
+    
+    PBVideoFrame *pvFrame = [[PBVideoFrame alloc]init];
+    
+    pvFrame.videoData = (unsigned char *)malloc(dataLength);//yuvBuffer;
+    memcpy(pvFrame.videoData, yuvBuffer, dataLength);
+    pvFrame.dataLength = dataLength;
+    pvFrame.width = vwidth;
+    pvFrame.height = vheight;
+    
+    
+    return pvFrame;
+}
+
+@end

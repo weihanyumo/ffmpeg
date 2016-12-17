@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ffmpeg.h"
 #import "muxing.h"
+#import "TEST_Filter.h"
 #import "PBVideoSwDecoder.h"
 
 #import "EAGLView.h"
@@ -16,7 +17,6 @@
 
 
 #define CacheFolder @"cacheFolder"
-#define MP4Prefix @"recordFileName"
 
 
 @interface ViewController ()
@@ -56,6 +56,7 @@
     //    [_eaglView addBorderWithColor:[UIColor blueColor] width:3.0 radius:120];
     [viewPlayBody insertSubview:_eaglView atIndex:0];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -74,7 +75,7 @@
 
 - (IBAction)btnMUXClicked:(id)sender
 {
-    NSString *outFile = [self getFilePath];
+    NSString *outFile = [self getFilePath:@"out.mp4" DelOld:YES];
     NSLog(outFile);
     muxing([outFile UTF8String]);
 }
@@ -91,7 +92,7 @@
 
 - (void)testHLS
 {
-    NSString *url = @"https://home-interface-test.mi-ae.com/v4/cloud/index.m3u8?expire=1477465406&code=6E28FAFAA7EF445C28825FB8C5E1E7B571C2CC741602FADD33D47A79A5C610B6E33C8A472D3CAEEA42EF337A19C7C23C19F695D2E37F391D46122201DA2EF4C300EF752719ED7A57C019F70282F13273FDAFF43149774201A64DD7C9C3D7EFD2&hmac=RJEtUdUaJqhY%2F%2FePRUJzFfDHbNw%3D";
+    NSString *url = @"http://api-dogfood.xiaoyi.com/v4/cloud/index.m3u8?expire=1481960094&code=E75D65279B303A2886A726CB71C67CEAEF5C213D2826C975141C44B58FF7D3DCB167BBAC1B851653F49CAB50E5246EA36B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=i4LrF81NLlieZePbInP5sCzfkIM%3D";
     if (self.textUrl.text.length < 10)
     {
         NSLog(@"no file");
@@ -100,7 +101,7 @@
     {
         url = self. textUrl.text;
     }
-    NSString *outFile = [self getFilePath];
+    NSString *outFile = [self getFilePath:@"hls.mp4" DelOld:YES];
     
     [_btnDownload setEnabled:NO];
     [self.peg doHlsToMP4:url outputPath:outFile progress:^(int32_t val, PBVideoFrame *frame) {
@@ -132,7 +133,26 @@
     [_btnDownload setEnabled:YES];
 }
 
--(NSString*)getFilePath
+-(IBAction)FilterClicked:(id)sender
+{
+    NSString *inFile = [self getFilePath:@"hls.flv" DelOld:NO];
+    NSString *outFile = [self getFilePath:@"out.yuv" DelOld:NO];
+    NSString *pngName = [self getFilePath:@"filter.png" DelOld:NO];
+    
+    myFilter *fileter = [[myFilter alloc]init];
+   [ fileter filterFile:[inFile UTF8String] :[pngName UTF8String] :[outFile UTF8String] progress:^(int32_t per, PBVideoFrame *frame) {
+       int intWidth = frame.width;
+       int intHeight = frame.height;
+       [_eaglView setDataSize:intWidth andHeight:intHeight];
+       if(frame.videoData)
+       {
+           [_eaglView drawView:frame.videoData];
+       }
+
+   }];
+}
+
+-(NSString*)getFilePath:(NSString*)fileName DelOld:(BOOL)delOld
 {
     NSString *filePath = nil;
     @try {
@@ -144,12 +164,12 @@
             BOOL isSuccess = [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
             if (isSuccess == YES)
             {
-                filePath = [self createFile:filePath];
+                filePath = [self createFile:filePath Name:fileName DelOld:delOld];
             }else{
                 filePath = nil;
             }
         }else{
-            filePath = [self createFile:filePath];
+            filePath = [self createFile:filePath Name:fileName DelOld:delOld];
         }
     }
     @catch (NSException *exception) {
@@ -158,10 +178,9 @@
     return filePath;
 }
 
--(NSString *)createFile:(NSString*)filePath
+-(NSString *)createFile:(NSString*)filePath Name:(NSString*)Name DelOld:(BOOL)delOld
 {
-    NSString *fileName = [[NSString alloc] initWithFormat:@"%@%d.mp4", MP4Prefix, 1];
-    filePath = [filePath stringByAppendingPathComponent:fileName];
+    filePath = [filePath stringByAppendingPathComponent:Name];
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {
         if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {
@@ -170,9 +189,12 @@
     }
     else
     {
-        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-        if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {
-            filePath = nil;
+        if(delOld)
+        {
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+            if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {
+                filePath = nil;
+            }
         }
     }
     return filePath;
