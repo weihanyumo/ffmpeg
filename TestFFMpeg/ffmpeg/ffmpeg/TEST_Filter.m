@@ -19,7 +19,7 @@
 #include <libswscale/swscale.h>
 
 
-const char *filter_descr = "movie=my_logo.png[wm];[in][wm]overlay=5:5[out]";
+const char *filter_descr = "filter.png";
 
 static AVFormatContext *pFormatCtx;
 static AVCodecContext *pCodecCtx;
@@ -138,7 +138,7 @@ int filterFile(const char *inPutFile, const char*outPutFile)
     if ((ret = init_filters(filter_descr)) < 0)
         goto end;
     
-    FILE *fp_yuv=fopen("test.yuv","wb+");
+    FILE *fp_yuv=fopen(outPutFile,"wb+");
 
     
     pFrame=av_frame_alloc();
