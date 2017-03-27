@@ -51,14 +51,6 @@ int get_queue(NewQueue*que, uint8_t* buf, int size) {
 	if ( (que->read_ptr + size) > pos) {
 		pthread_mutex_unlock(&que->locker);
 		return 1;
-//		struct timespec timeout;
-//		timeout.tv_sec=time(0)+1;
-//		timeout.tv_nsec=0;
-//		pthread_cond_timedwait(&que->cond, &que->locker, &timeout);
-//		if ( (que->read_ptr + size) > pos ) {
-//			pthread_mutex_unlock(&que->locker);
-//			return 1;
-//		}
 	}
 
 	if (wrap) {

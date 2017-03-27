@@ -27,8 +27,6 @@
 		96395DC51E88DD8900AE971B /* ipinput.h in Sources */ = {isa = PBXBuildFile; fileRef = 96395DBE1E88C4F900AE971B /* ipinput.h */; };
 		96395DC61E88DD8900AE971B /* ffUDP.h in Sources */ = {isa = PBXBuildFile; fileRef = 96395DC41E88C58500AE971B /* ffUDP.h */; };
 		96395DC71E88DD8900AE971B /* ffUDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 96395DBF1E88C4F900AE971B /* ffUDP.m */; };
-		96395DC81E88DD8900AE971B /* queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 96395DC01E88C4F900AE971B /* queue.m */; };
-		96395DC91E88DD8900AE971B /* queue.h in Sources */ = {isa = PBXBuildFile; fileRef = 96395DC11E88C4F900AE971B /* queue.h */; };
 		96395DCA1E88DD8900AE971B /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 96395DC21E88C4F900AE971B /* utils.m */; };
 		96395DCB1E88DD8900AE971B /* utils.h in Sources */ = {isa = PBXBuildFile; fileRef = 96395DC31E88C4F900AE971B /* utils.h */; };
 		96395DCC1E88DD8900AE971B /* PBVideoSwDecoder.h in Sources */ = {isa = PBXBuildFile; fileRef = 96B249371DAA251700EFDE86 /* PBVideoSwDecoder.h */; };
@@ -130,6 +128,7 @@
 		96395E2C1E88DD8900AE971B /* VideoToolbox.framework in Sources */ = {isa = PBXBuildFile; fileRef = 961A79271D5C4F2000EFA629 /* VideoToolbox.framework */; };
 		96395E2D1E88DD8900AE971B /* CoreVideo.framework in Sources */ = {isa = PBXBuildFile; fileRef = 961A79251D5C4F1800EFA629 /* CoreVideo.framework */; };
 		96395E2E1E88DD8900AE971B /* libffmpeg.a in Sources */ = {isa = PBXBuildFile; fileRef = 961A77C81D5C28F900EFA629 /* libffmpeg.a */; };
+		96395E2F1E88F41B00AE971B /* ffUDP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96395DC41E88C58500AE971B /* ffUDP.h */; };
 		9651261E1E04DE8800E82E2B /* TEST_Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651261C1E04DE8800E82E2B /* TEST_Filter.m */; };
 		9651261F1E04E18500E82E2B /* TEST_Filter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9651261D1E04DE8800E82E2B /* TEST_Filter.h */; };
 		96B249391DAA259700EFDE86 /* PBVideoSwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249381DAA251700EFDE86 /* PBVideoSwDecoder.m */; };
@@ -143,6 +142,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				96395E2F1E88F41B00AE971B /* ffUDP.h in CopyFiles */,
 				9651261F1E04E18500E82E2B /* TEST_Filter.h in CopyFiles */,
 				96B2493A1DAA2D1C00EFDE86 /* PBVideoSwDecoder.h in CopyFiles */,
 				96349CB21D7E99EB00BDFFF8 /* muxing.h in CopyFiles */,
@@ -253,8 +253,6 @@
 		96349CB01D7E978100BDFFF8 /* muxing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = muxing.m; sourceTree = "<group>"; };
 		96395DBE1E88C4F900AE971B /* ipinput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ipinput.h; sourceTree = "<group>"; };
 		96395DBF1E88C4F900AE971B /* ffUDP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ffUDP.m; sourceTree = "<group>"; };
-		96395DC01E88C4F900AE971B /* queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = queue.m; sourceTree = "<group>"; };
-		96395DC11E88C4F900AE971B /* queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		96395DC21E88C4F900AE971B /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		96395DC31E88C4F900AE971B /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		96395DC41E88C58500AE971B /* ffUDP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffUDP.h; sourceTree = "<group>"; };
@@ -516,8 +514,6 @@
 				96395DBE1E88C4F900AE971B /* ipinput.h */,
 				96395DC41E88C58500AE971B /* ffUDP.h */,
 				96395DBF1E88C4F900AE971B /* ffUDP.m */,
-				96395DC01E88C4F900AE971B /* queue.m */,
-				96395DC11E88C4F900AE971B /* queue.h */,
 				96395DC21E88C4F900AE971B /* utils.m */,
 				96395DC31E88C4F900AE971B /* utils.h */,
 			);
@@ -593,8 +589,6 @@
 				96395DC51E88DD8900AE971B /* ipinput.h in Sources */,
 				96395DC61E88DD8900AE971B /* ffUDP.h in Sources */,
 				96395DC71E88DD8900AE971B /* ffUDP.m in Sources */,
-				96395DC81E88DD8900AE971B /* queue.m in Sources */,
-				96395DC91E88DD8900AE971B /* queue.h in Sources */,
 				96395DCA1E88DD8900AE971B /* utils.m in Sources */,
 				96395DCB1E88DD8900AE971B /* utils.h in Sources */,
 				96395DCC1E88DD8900AE971B /* PBVideoSwDecoder.h in Sources */,

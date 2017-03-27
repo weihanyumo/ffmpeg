@@ -11,6 +11,8 @@
 #import "muxing.h"
 #import "TEST_Filter.h"
 #import "PBVideoSwDecoder.h"
+#import "ffUDP.h"
+
 
 #import "EAGLView.h"
 
@@ -151,6 +153,24 @@
 
    }];
 }
+
+-(IBAction)UDPDOWNclicked:(id)sender
+{
+    NSString *url = @"http://api-dogfood.xiaoyi.com/v4/cloud/index.m3u8?expire=1481960094&code=E75D65279B303A2886A726CB71C67CEAEF5C213D2826C975141C44B58FF7D3DCB167BBAC1B851653F49CAB50E5246EA36B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=i4LrF81NLlieZePbInP5sCzfkIM%3D";
+    if (self.textUrl.text.length < 10)
+    {
+        NSLog(@"no file");
+    }
+    else
+    {
+        url = self. textUrl.text;
+    }
+    ffUDP([url UTF8String]);
+    
+}
+
+
+
 
 -(NSString*)getFilePath:(NSString*)fileName DelOld:(BOOL)delOld
 {
