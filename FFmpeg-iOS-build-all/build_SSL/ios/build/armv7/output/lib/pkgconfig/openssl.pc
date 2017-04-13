@@ -1,0 +1,9 @@
+prefix=/Users/duhaodong/Desktop/Projects/FFMpeg/ffmpeg/FFmpeg-iOS-build-all/build_SSL/ios/build/armv7/output
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: OpenSSL
+Description: Secure Sockets Layer and cryptography libraries and tools
+Version: 1.0.2h
+Requires: libssl libcrypto

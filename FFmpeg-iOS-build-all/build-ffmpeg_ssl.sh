@@ -6,15 +6,13 @@ SCRATCH="scratch"
 THIN=`pwd`/"thin"
 
 ARCHS="arm64 armv7 armv7s x86_64 i386"
-# absolute path to x264 library
-#X264=`pwd`/fat-x264
-#--enable-logging
+#git clone git://git.videolan.org/x264.git
 
 CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-doc --enable-pic \
                  --disable-programs --disable-ffmpeg --disable-ffplay --disable-ffprobe --disable-ffserver \
-                 --enable-openssl\
+                  --enable-gpl --enable-openssl --enable-nonfree \
                  --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
-                 --disable-encoders --enable-encoder=h264 --enable-encoder=mpeg4 --enable-encoder=aac "
+                 --disable-encoders --enable-encoder=h264 --enable-encoder=mpeg4 --enable-encoder=aac --enable-libx264"
 
 
 
@@ -75,41 +73,21 @@ then
 		fi
 
 #ssl
-
-        if [ "$ARCH" = "i386" ]
-        then
-            FF_BUILD_NAME_OPENSSL="openssl-i386"
-        elif [ "$ARCH" = "x86_64" ]
-        then
-            FF_BUILD_NAME_OPENSSL="openssl-x86_64"
-        elif [ "$ARCH" = "armv7" ]
-        then
-            FF_BUILD_NAME_OPENSSL="openssl-armv7"
-        elif [ "$ARCH" = "armv7s" ]
-        then
-            FF_BUILD_NAME_OPENSSL="openssl-armv7s"
-        elif [ "$ARCH" = "arm64" ]
-        then
-            FF_BUILD_NAME_OPENSSL="openssl-arm64"
-        else
-            echo "unknown architecture $FF_ARCH";
-            exit 1
-        fi
-
-        FFMPEG_DEP_OPENSSL_INC="$CWD/openssl/$FF_BUILD_NAME_OPENSSL/output/include"
+        FFMPEG_DEP_OPENSSL_INC="$CWD/build-SSL/ios/build/$ARCH/output/include"
+        FFMPEG_DEP_OPENSSL_LIB="$CWD/build-SSL/ios/build/$ARCH/output/lib"
         echo $FFMPEG_DEP_OPENSSL_INC
-        FFMPEG_DEP_OPENSSL_LIB="$CWD/openssl/$FF_BUILD_NAME_OPENSSL/output/lib"
-#ssl end
-
-
+#x264
+        FFMPEG_DEP_X264_INC="$CWD/build_x264/thin-x264/$ARCH/include"
+        FFMPEG_DEP_X264_LIB="$CWD/build_x264/thin-x264/$ARCH/lib"
+        echo $FFMPEG_DEP_X264_INC
+#end
 		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
 		CC="xcrun -sdk $XCRUN_SDK clang"
 		CXXFLAGS="$CFLAGS"
 
-        CFLAGS="$CFLAGS -I${FFMPEG_DEP_OPENSSL_INC}"
-        FFMPEG_DEP_LIBS="$CFLAGS -L${FFMPEG_DEP_OPENSSL_LIB} -lssl -lcrypto"
+        CFLAGS="$CFLAGS -I$FFMPEG_DEP_OPENSSL_INC -I$FFMPEG_DEP_X264_INC"
+        FFMPEG_DEP_LIBS="$CFLAGS -L$FFMPEG_DEP_OPENSSL_LIB -L$FFMPEG_DEP_X264_LIB -lssl -lcrypto -lx264"
 		LDFLAGS="$FFMPEG_DEP_LIBS"
-
 
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \
 		    --target-os=darwin \
