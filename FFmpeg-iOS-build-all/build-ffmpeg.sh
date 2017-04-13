@@ -11,9 +11,10 @@ ARCHS="arm64 armv7 armv7s x86_64 i386"
 #--enable-logging
 
 CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-programs \
-                 --disable-doc --enable-pic  \
+                --disable-programs --disable-ffmpeg --disable-ffplay --disable-ffprobe --disable-ffserver \
+                 --disable-doc --enable-pic  --enable-gpl --enable-openssl \
                  --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
-                 --disable-encoders --enable-encoder=h264 --enable-encoder=mpeg4 --enable-encoder=aac "
+                 --disable-encoders --enable-encoder=h264 --enable-encoder=mpeg4 --enable-encoder=aac --enable-encoder=libx264"
 
 
 
@@ -72,8 +73,20 @@ then
 		        EXPORT="GASPP_FIX_XCODE5=1"
 		    fi
 		fi
+#ssl
+        FFMPEG_DEP_OPENSSL_INC="$CWD/build_SSL/ios/build/$ARCH/output/include/openssl"
+        FFMPEG_DEP_OPENSSL_LIB="$CWD/build_SSL/ios/build/$ARCH/output/lib"
+        echo $FFMPEG_DEP_OPENSSL_LIB
+#x264
+        FFMPEG_DEP_X264_INC="$CWD/build_x264/thin-x264/$ARCH/include"
+        FFMPEG_DEP_X264_LIB="$CWD/build_x264/thin-x264/$ARCH/lib"
+        echo $FFMPEG_DEP_X264_INC
+#end
+#/Users/duhaodong/Desktop/Projects/FFMpeg/ffmpeg/FFmpeg-iOS-build-all/build-SSL/ios/build/arm64/output/include/openssl
+        CFLAGS="$CFLAGS -I$FFMPEG_DEP_OPENSSL_INC -I$FFMPEG_DEP_X264_INC"
+        FFMPEG_DEP_LIBS="$CFLAGS -L$FFMPEG_DEP_OPENSSL_LIB -L$FFMPEG_DEP_X264_LIB -lssl -lcrypto -lx264"
+        echo $FFMPEG_DEP_LIBS
 
-        CFLAGS="$CFLAGS -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
 		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
 		CC="xcrun -sdk $XCRUN_SDK clang"
 		CXXFLAGS="$CFLAGS"
