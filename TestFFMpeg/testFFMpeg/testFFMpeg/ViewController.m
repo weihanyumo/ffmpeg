@@ -26,16 +26,27 @@
 @property (nonatomic, strong) IBOutlet UIButton  *btnDownload;
 @property (nonatomic, strong) EAGLView *eaglView;
 @property (nonatomic, strong) IBOutlet UITextField *textUrl;
-
+@property(nonatomic,strong) myFilter *play;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapGestureRecognizer.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+    
     [self initEAGLView];
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+-(void)keyboardHide:(UITapGestureRecognizer*)tap{
+    [self.view endEditing:YES];
+}
+
 
 -(void) initEAGLView{
     if (!_eaglView)
@@ -78,7 +89,6 @@
 - (IBAction)btnMUXClicked:(id)sender
 {
     NSString *outFile = [self getFilePath:@"out.mp4" DelOld:YES];
-    NSLog(outFile);
     muxing([outFile UTF8String]);
 }
 #pragma mark - test
@@ -104,7 +114,7 @@
         url = self. textUrl.text;
     }
     NSString *outFile = [self getFilePath:@"hls.mp4" DelOld:YES];
-    
+    url = [self getFilePath:@"bbb_1280_720.mkv" DelOld:NO];
     [_btnDownload setEnabled:NO];
     [self.peg doHlsToMP4:url outputPath:outFile progress:^(int32_t val, PBVideoFrame *frame) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -137,7 +147,11 @@
 
 -(IBAction)FilterClicked:(id)sender
 {
-    NSString *inFile = [self getFilePath:@"hls.flv" DelOld:NO];
+    
+    NSString *inFile = [self getFilePath:@"spreed_1080.mkv" DelOld:NO];
+//    NSString *inFile = [self getFilePath:@"4096_1744.mkv" DelOld:NO];
+//    NSString *inFile = [self getFilePath:@"bbb_1280_720.mkv" DelOld:NO];
+    
     NSString *outFile = [self getFilePath:@"out.yuv" DelOld:NO];
     NSString *pngName = [self getFilePath:@"filter.png" DelOld:NO];
     
@@ -154,9 +168,39 @@
    }];
 }
 
+-(IBAction)playClicked:(id)sender
+{
+    NSString *filename = _textUrl.text;
+    NSString *inFile = [self getFilePath:filename DelOld:NO];
+    //真机
+    inFile = @"265";
+    NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"h265"];
+    if(path){
+        inFile = path;
+    }
+    //真机end
+    _play = [[myFilter alloc]init];
+    [_play playFile:[inFile UTF8String] progress:^(int per, PBVideoFrame *frame) {
+        int intWidth = frame.width;
+        int intHeight = frame.height;
+        [_eaglView setDataSize:intWidth andHeight:intHeight];
+        if(frame.videoData)
+        {
+            [_eaglView drawView:frame.videoData];
+        }
+    }];
+}
+
+-(IBAction)btnStop:(id)sender
+{
+    [_play cancelPaly];
+    _play = nil;
+}
+
 -(IBAction)UDPDOWNclicked:(id)sender
 {
     NSString *url = @"http://api-dogfood.xiaoyi.com/v4/cloud/index.m3u8?expire=1481960094&code=E75D65279B303A2886A726CB71C67CEAEF5C213D2826C975141C44B58FF7D3DCB167BBAC1B851653F49CAB50E5246EA36B673ACB0FA43A390B0E813E6709B2E92826ECE533D9F2B11131FBD871D763AF33BC72B3383FC4A80A45113DE197ED3B&hmac=i4LrF81NLlieZePbInP5sCzfkIM%3D";
+    url = [self getFilePath:@"bbb_1280_720.mkv" DelOld:NO];
     if (self.textUrl.text.length < 10)
     {
         NSLog(@"no file");

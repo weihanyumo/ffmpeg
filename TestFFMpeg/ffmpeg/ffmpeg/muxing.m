@@ -176,7 +176,8 @@ static int write_audio_frame(AVFormatContext *oc, AVStream *st)
 {
     AVCodecContext *c;
     AVPacket pkt = { 0 }; // data and size must be 0;
-    AVFrame *frame = avcodec_alloc_frame();
+//    AVFrame *frame = avcodec_alloc_frame();
+    AVFrame *frame = av_frame_alloc();
     int got_packet, ret, dst_nb_samples;
     
     av_init_packet(&pkt);
@@ -231,7 +232,8 @@ static int write_audio_frame(AVFormatContext *oc, AVStream *st)
                av_err2str(ret));
         return 0;
     }
-    avcodec_free_frame(&frame);
+//    avcodec_free_frame(&frame);
+    av_frame_free(&frame);
     return  1;
 }
 
@@ -324,8 +326,8 @@ int ScaleImg(AVFrame *src_picture, AVFrame *dst_picture, int srcW, int srcH, int
     dst_picture->linesize[1] = nDstW / 2;
     dst_picture->linesize[2] = nDstW / 2;
  
-    m_pSwsContext = sws_getContext(srcW, srcH, PIX_FMT_YUV420P,
-                                   nDstW, nDstH, PIX_FMT_YUV420P,
+    m_pSwsContext = sws_getContext(srcW, srcH, AV_PIX_FMT_YUV420P,
+                                   nDstW, nDstH, AV_PIX_FMT_YUV420P,
                                    SWS_BICUBIC,
                                    NULL, NULL, NULL);
     if (NULL == m_pSwsContext)
@@ -350,8 +352,10 @@ static void write_video_frame(AVFormatContext *oc, AVStream *st, int w, int h)
     ret = avpicture_alloc(&dst_picture, c->pix_fmt, VIDEO_WIDTH, VIDEO_HEIGHT);
     AVFrame *frame, *srcFrame;
     
-    frame = avcodec_alloc_frame();
-    srcFrame = avcodec_alloc_frame();
+//    frame = avcodec_alloc_frame();
+    frame = av_frame_alloc();
+//    srcFrame = avcodec_alloc_frame();
+    srcFrame = av_frame_alloc();
     
     if (frame_count >= STREAM_NB_FRAMES)
     {

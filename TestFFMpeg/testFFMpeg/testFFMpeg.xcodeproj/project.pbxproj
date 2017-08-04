@@ -18,8 +18,14 @@
 		961A79381D5C528000EFA629 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79371D5C528000EFA629 /* libbz2.1.0.tbd */; };
 		961A793A1D5C529100EFA629 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */; };
 		961A793C1D5C52A600EFA629 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */; };
+		965F24DC1F205F31002ACA81 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24DB1F205F31002ACA81 /* CoreVideo.framework */; };
+		965F24DE1F205F52002ACA81 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24DD1F205F52002ACA81 /* VideoToolbox.framework */; };
+		965F24E01F205F6D002ACA81 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24DF1F205F6D002ACA81 /* AudioToolbox.framework */; };
+		965F24E21F205FD9002ACA81 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24E11F205FD9002ACA81 /* CoreMedia.framework */; };
+		965F24E41F206065002ACA81 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24E31F206065002ACA81 /* AVFoundation.framework */; };
 		968717BB1DC062BE007F52B5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 968717B91DC062BE007F52B5 /* libcrypto.a */; };
 		968717BC1DC062BE007F52B5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 968717BA1DC062BE007F52B5 /* libssl.a */; };
+		96A6D21B1F332C0200D74954 /* 265.h265 in Resources */ = {isa = PBXBuildFile; fileRef = 96A6D21A1F332C0200D74954 /* 265.h265 */; };
 		96B2491A1DAA1A3A00EFDE86 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249141DAA1A3A00EFDE86 /* EAGLView.m */; };
 		96B2491B1DAA1A3A00EFDE86 /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249161DAA1A3A00EFDE86 /* ES2Renderer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		96B2491C1DAA1A3A00EFDE86 /* shaders.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B249191DAA1A3A00EFDE86 /* shaders.m */; };
@@ -84,8 +90,14 @@
 		961A79371D5C528000EFA629 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
 		961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		965F24DB1F205F31002ACA81 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		965F24DD1F205F52002ACA81 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		965F24DF1F205F6D002ACA81 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		965F24E11F205FD9002ACA81 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		965F24E31F206065002ACA81 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		968717B91DC062BE007F52B5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Alipay/libcrypto.a; sourceTree = "<group>"; };
 		968717BA1DC062BE007F52B5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Alipay/libssl.a; sourceTree = "<group>"; };
+		96A6D21A1F332C0200D74954 /* 265.h265 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 265.h265; sourceTree = "<group>"; };
 		96B249131DAA1A3A00EFDE86 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		96B249141DAA1A3A00EFDE86 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
 		96B249151DAA1A3A00EFDE86 /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
@@ -108,6 +120,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				965F24E41F206065002ACA81 /* AVFoundation.framework in Frameworks */,
+				965F24E21F205FD9002ACA81 /* CoreMedia.framework in Frameworks */,
+				965F24E01F205F6D002ACA81 /* AudioToolbox.framework in Frameworks */,
+				965F24DE1F205F52002ACA81 /* VideoToolbox.framework in Frameworks */,
+				965F24DC1F205F31002ACA81 /* CoreVideo.framework in Frameworks */,
 				968717BB1DC062BE007F52B5 /* libcrypto.a in Frameworks */,
 				968717BC1DC062BE007F52B5 /* libssl.a in Frameworks */,
 				96B2492D1DAA1FAF00EFDE86 /* libc++.tbd in Frameworks */,
@@ -174,6 +191,7 @@
 				961A772D1D5C1FDF00EFA629 /* ViewController.m */,
 				961A772F1D5C1FDF00EFA629 /* Main.storyboard */,
 				961A77321D5C1FDF00EFA629 /* Assets.xcassets */,
+				96A6D21A1F332C0200D74954 /* 265.h265 */,
 				961A77371D5C1FDF00EFA629 /* Info.plist */,
 				961A77261D5C1FDF00EFA629 /* Supporting Files */,
 			);
@@ -217,6 +235,11 @@
 		961A793E1D5C546A00EFA629 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				965F24E31F206065002ACA81 /* AVFoundation.framework */,
+				965F24E11F205FD9002ACA81 /* CoreMedia.framework */,
+				965F24DF1F205F6D002ACA81 /* AudioToolbox.framework */,
+				965F24DD1F205F52002ACA81 /* VideoToolbox.framework */,
+				965F24DB1F205F31002ACA81 /* CoreVideo.framework */,
 				968717B91DC062BE007F52B5 /* libcrypto.a */,
 				968717BA1DC062BE007F52B5 /* libssl.a */,
 				96B2492C1DAA1FAF00EFDE86 /* libc++.tbd */,
@@ -316,6 +339,8 @@
 				TargetAttributes = {
 					961A77221D5C1FDF00EFA629 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 4L38HW56Y6;
+						ProvisioningStyle = Automatic;
 					};
 					961A773B1D5C1FDF00EFA629 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -368,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96A6D21B1F332C0200D74954 /* 265.h265 in Resources */,
 				961A77331D5C1FDF00EFA629 /* Assets.xcassets in Resources */,
 				961A77311D5C1FDF00EFA629 /* Main.storyboard in Resources */,
 			);
@@ -539,7 +565,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4L38HW56Y6;
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = YES;
 				HEADER_SEARCH_PATHS = (
@@ -564,8 +592,9 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpeg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaoyi.home;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ffmpeg/ffmpeg\"";
 			};
 			name = Debug;
@@ -574,7 +603,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4L38HW56Y6;
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = YES;
 				HEADER_SEARCH_PATHS = (
@@ -599,8 +630,9 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = dhd.testFFMpeg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaoyi.home;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ffmpeg/ffmpeg\"";
 			};
 			name = Release;

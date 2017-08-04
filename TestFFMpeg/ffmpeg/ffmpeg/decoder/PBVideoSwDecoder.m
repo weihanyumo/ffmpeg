@@ -36,7 +36,13 @@
 #define MAX_YUV_BUFFER_LENGTH 1920*1080*2
 
 @implementation PBVideoFrame
-
+-(void)dealloc
+{
+    if (self.videoData) {
+        free(self.videoData);
+        self.videoData = NULL;
+    }
+}
 @end
 
 
@@ -48,6 +54,9 @@
     
     AVPacket packet;
     
+    //test log
+    float timeSumCost;
+    float timeCount;
     unsigned char *yuvBuffer;
     BOOL isFFMpegInit;
 }
@@ -73,7 +82,8 @@
     avcodec_register_all();
     
     // find the decoder for H264
-    avCodec = avcodec_find_decoder(AV_CODEC_ID_H264);
+//    avCodec = avcodec_find_decoder(AV_CODEC_ID_H264);
+    avCodec = avcodec_find_decoder(AV_CODEC_ID_H265);
     
     if (avCodec == NULL)
     {
@@ -94,7 +104,8 @@
     }
     
     // allocate frame
-    avFrame = avcodec_alloc_frame();
+//    avFrame = avcodec_alloc_frame();
+    avFrame = av_frame_alloc();
     if (avFrame == NULL)
     {
         NSLog(@"Can not allocate frame");
@@ -103,7 +114,8 @@
     
     avCodecContext->flags |= CODEC_FLAG_EMU_EDGE | CODEC_FLAG_LOW_DELAY;
     avCodecContext->debug |= FF_DEBUG_MMCO;
-    avCodecContext->pix_fmt = PIX_FMT_YUV420P;
+//    avCodecContext->pix_fmt = aPIX_FMT_YUV420P;
+    avCodecContext->pix_fmt = AV_PIX_FMT_YUV420P;
     
     isFFMpegInit = YES;
     
@@ -122,7 +134,8 @@
     
     if(avFrame != NULL)
     {
-        avcodec_free_frame(&avFrame);
+//        avcodec_free_frame(&avFrame);
+        av_frame_free(&avFrame);
         avFrame = NULL;
     }
     
@@ -153,8 +166,20 @@
     }
     
     int gotLen = 0;
-    int ret = avcodec_decode_video2(avCodecContext, avFrame, &gotLen, packet);
     
+//    int ret = avcodec_decode_video2(avCodecContext, avFrame, &gotLen, packet);
+    NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
+    int ret = avcodec_decode_video2(avCodecContext, avFrame, &gotLen, &packet);
+    NSTimeInterval cost = [[NSDate date]timeIntervalSince1970] - time;
+    //    printf("decode cost time:%.3f\n", cost);
+    if (timeCount++ < 50) {
+        timeSumCost += cost;
+    }
+    else{
+        printf("decode W:%d H:%d  avg cost :%.3f\n", avCodecContext->width, avCodecContext->height, timeSumCost / timeCount);
+        timeCount = 0;
+        timeSumCost = 0;
+    }
     if (gotLen == 0 || ret <= 0)
     {
         NSLog(@"Decode Video Frame ==> errCode:%d,seqNumber:%d,isIFrame:%d",ret,6, 0);

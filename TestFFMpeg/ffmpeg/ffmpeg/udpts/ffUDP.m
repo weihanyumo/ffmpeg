@@ -69,10 +69,10 @@ int ffUDP(char *url){
 		fprintf(stdout, "open stream success!\n");
 	}
 
-	if (av_find_stream_info(pFmt) < 0) {
-		fprintf(stderr, "could not fine stream.\n");
-		return -1;
-	}
+//	if (avformat_find_stream_info(pFmt) < 0) {
+//		fprintf(stderr, "could not fine stream.\n");
+//		return -1;
+//	}
 
 	av_dump_format(pFmt, 0, "", 0);
 
@@ -122,7 +122,8 @@ int ffUDP(char *url){
 	}
 
 	int got_picture;
-	AVFrame *pframe = avcodec_alloc_frame();
+//	AVFrame *pframe = avcodec_alloc_frame();
+    AVFrame *pframe = av_frame_alloc();
 	AVPacket pkt;
 	av_init_packet(&pkt);
 

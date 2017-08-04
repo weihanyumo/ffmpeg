@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SOURCE="ffmpeg-2.0.2"
+SOURCE="ffmpeg-3.3.2"
 FAT="Fat"
 SCRATCH="scratch"
 THIN=`pwd`/"thin"
@@ -12,9 +12,10 @@ CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-n
                 --disable-programs --disable-ffmpeg --disable-ffplay --disable-ffprobe --disable-ffserver \
                 --enable-openssl\
                 --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
-                --enable-gpl --enable-libx264"
+                --enable-gpl --enable-libx264 --enable-decoder=hevc"
 
 
+X265="n"
 COMPILE="y"
 LIPO="y"
 
@@ -86,6 +87,15 @@ then
 
         CFLAGS="$CFLAGS -I$FFMPEG_DEP_OPENSSL_INC -I$FFMPEG_DEP_X264_INC"
         FFMPEG_DEP_LIBS="$CFLAGS -L$FFMPEG_DEP_OPENSSL_LIB -L$FFMPEG_DEP_X264_LIB -lssl -lcrypto -lx264"
+
+        if [ "$X265" ]
+        then
+#FFMPEG_DEP_LIBS="$FFMPEG_DEP_LIBS"
+# -lx265"
+            CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-decoder=hevc "
+#--enable-muxer=hevc --enable-libx265 --extra-libs=-lstdc++"
+        fi
+
 		LDFLAGS="$FFMPEG_DEP_LIBS"
 
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \

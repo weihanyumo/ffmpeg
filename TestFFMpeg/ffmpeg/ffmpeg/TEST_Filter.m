@@ -29,7 +29,15 @@ AVFilterGraph *filter_graph;
 static int video_stream_index = -1;
 
 
+@interface myFilter()
+{
+    dispatch_queue_t playQueue;
+    //test log
+    float timeSumCost;
+    float timeCount;
+}
 
+@end
 @implementation myFilter
 
 static int open_input_file(const char *filename)
@@ -41,6 +49,7 @@ static int open_input_file(const char *filename)
         char buf[1024];
         av_strerror(ret, buf, 1024);
         printf("Couldn't open file %s: %d(%s)", filename, ret, buf);
+        
         return ret;
     }
     
@@ -57,6 +66,7 @@ static int open_input_file(const char *filename)
     }
     video_stream_index = ret;
     pCodecCtx = pFormatCtx->streams[video_stream_index]->codec;
+//    pCodecCtx->flags |= CODEC_FLAG_LOW_DELAY;
     
     /* init the video decoder */
     if ((ret = avcodec_open2(pCodecCtx, dec, NULL)) < 0) {
@@ -230,12 +240,99 @@ end:
     return 0;  
 }
 
+
+-(int) playFile:(const char*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
+{
+    playQueue = dispatch_queue_create("playqueu", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(playQueue, ^{
+        char fileName[1024] = {0};
+        memcpy(fileName, inPutFile, strlen(inPutFile));
+        [self doPlayFile:fileName progress:progress];
+    });
+    return 0;
+}
+
+-(int)doPlayFile:(const char*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
+{
+    int ret;
+    AVPacket packet;
+    AVFrame *pFrame;
+    AVFrame *pFrame_out;
+    
+    int got_frame;
+    
+    av_register_all();
+    avfilter_register_all();
+    
+    if ((ret = open_input_file(inPutFile)) < 0)
+        goto end;
+    char filters[1024] = {0};
+    
+    
+    pFrame=av_frame_alloc();
+    NSTimeInterval curTime = [[NSDate date]timeIntervalSince1970];
+    while (!self.cancel) {
+        ret = av_read_frame(pFormatCtx, &packet);
+        if (ret< 0)
+            break;
+        
+        if (packet.stream_index == video_stream_index) {
+            got_frame = 0;
+            NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
+            ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_frame, &packet);
+            
+            NSTimeInterval cost = [[NSDate date]timeIntervalSince1970] - time;
+            //    printf("decode cost time:%.3f\n", cost);
+            if (timeCount++ < 50) {
+                timeSumCost += cost;
+            }
+            else{
+                printf("decode W:%d H:%d  avg cost :%.3f\n", pFrame->width, pFrame->height, timeSumCost / timeCount);
+                timeCount = 0;
+                timeSumCost = 0;
+            }
+            if (ret < 0) {
+                printf( "Error decoding video\n");
+                break;
+            }
+            
+            if (got_frame) {
+                pFrame->pts = av_frame_get_best_effort_timestamp(pFrame);
+                
+                PBVideoFrame *pvFrame = [self getVideoFrme:pFrame :pFrame->width :pFrame->height];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+                    progress(1,pvFrame);
+//                });
+            }
+        }
+    }
+    
+end:
+    if (pCodecCtx)
+        avcodec_close(pCodecCtx);
+    if (pFormatCtx)
+        avformat_close_input(&pFormatCtx);
+    
+    if (ret < 0 && ret != AVERROR_EOF) {
+        char buf[1024];
+        av_strerror(ret, buf, sizeof(buf));
+        printf("Error occurred: %s\n", buf);  
+        return -1;  
+    }  
+    
+    return 0;
+}
+
+-(void)cancelPaly
+{
+    self.cancel = YES;
+}
 -(PBVideoFrame*)getVideoFrme:(AVFrame*)avFrame :(int)vwidth :(int)vheight
 {
     static  char *yuvBuffer;
     if(!yuvBuffer)
     {
-        yuvBuffer = (unsigned char *)malloc(1024*1024*3);
+        yuvBuffer = (unsigned char *)malloc(1024*1024*3 * 10);
     }
     unsigned char *bufferOffset = yuvBuffer;
     
