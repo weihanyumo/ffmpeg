@@ -122,6 +122,9 @@
 		96395E2D1E88DD8900AE971B /* CoreVideo.framework in Sources */ = {isa = PBXBuildFile; fileRef = 961A79251D5C4F1800EFA629 /* CoreVideo.framework */; };
 		96395E2E1E88DD8900AE971B /* libffmpeg.a in Sources */ = {isa = PBXBuildFile; fileRef = 961A77C81D5C28F900EFA629 /* libffmpeg.a */; };
 		96395E2F1E88F41B00AE971B /* ffUDP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96395DC41E88C58500AE971B /* ffUDP.h */; };
+		963C9E1D1F38476F00A9103C /* libmi_decoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 963C9E1C1F38475600A9103C /* libmi_decoder.a */; };
+		963C9E201F3847AB00A9103C /* MIDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 963C9E1F1F3847AB00A9103C /* MIDecoder.m */; };
+		963C9E211F3847C900A9103C /* MIDecoder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 963C9E1E1F3847AB00A9103C /* MIDecoder.h */; };
 		9651261E1E04DE8800E82E2B /* TEST_Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651261C1E04DE8800E82E2B /* TEST_Filter.m */; };
 		9651261F1E04E18500E82E2B /* TEST_Filter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9651261D1E04DE8800E82E2B /* TEST_Filter.h */; };
 		965F24D71F205596002ACA81 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24D61F205573002ACA81 /* libx264.a */; };
@@ -137,6 +140,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				963C9E211F3847C900A9103C /* MIDecoder.h in CopyFiles */,
 				96395E2F1E88F41B00AE971B /* ffUDP.h in CopyFiles */,
 				9651261F1E04E18500E82E2B /* TEST_Filter.h in CopyFiles */,
 				96B2493A1DAA2D1C00EFDE86 /* PBVideoSwDecoder.h in CopyFiles */,
@@ -244,6 +248,12 @@
 		96395DC21E88C4F900AE971B /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		96395DC31E88C4F900AE971B /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		96395DC41E88C58500AE971B /* ffUDP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffUDP.h; sourceTree = "<group>"; };
+		963C9E181F38475600A9103C /* libmi_dec_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libmi_dec_common.h; sourceTree = "<group>"; };
+		963C9E191F38475600A9103C /* libmi_h264_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libmi_h264_dec.h; sourceTree = "<group>"; };
+		963C9E1A1F38475600A9103C /* libmi_h265_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libmi_h265_dec.h; sourceTree = "<group>"; };
+		963C9E1C1F38475600A9103C /* libmi_decoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmi_decoder.a; sourceTree = "<group>"; };
+		963C9E1E1F3847AB00A9103C /* MIDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDecoder.h; sourceTree = "<group>"; };
+		963C9E1F1F3847AB00A9103C /* MIDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDecoder.m; sourceTree = "<group>"; };
 		9651261C1E04DE8800E82E2B /* TEST_Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TEST_Filter.m; sourceTree = "<group>"; };
 		9651261D1E04DE8800E82E2B /* TEST_Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TEST_Filter.h; sourceTree = "<group>"; };
 		965F24C81F2054EB002ACA81 /* avdct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avdct.h; sourceTree = "<group>"; };
@@ -269,6 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				963C9E1D1F38476F00A9103C /* libmi_decoder.a in Frameworks */,
 				961A79341D5C50A600EFA629 /* CoreMedia.framework in Frameworks */,
 				961A792A1D5C4F2C00EFA629 /* AudioToolbox.framework in Frameworks */,
 				961A79281D5C4F2000EFA629 /* VideoToolbox.framework in Frameworks */,
@@ -317,6 +328,8 @@
 				961A77CD1D5C28F900EFA629 /* ffmpeg.m */,
 				96349CAF1D7E978100BDFFF8 /* muxing.h */,
 				96349CB01D7E978100BDFFF8 /* muxing.m */,
+				963C9E1E1F3847AB00A9103C /* MIDecoder.h */,
+				963C9E1F1F3847AB00A9103C /* MIDecoder.m */,
 				96F772FB1DF00A0800CC4C8D /* PrefixHeader.h */,
 				9651261D1E04DE8800E82E2B /* TEST_Filter.h */,
 				9651261C1E04DE8800E82E2B /* TEST_Filter.m */,
@@ -336,6 +349,7 @@
 		961A77D51D5C299500EFA629 /* ffmpeg */ = {
 			isa = PBXGroup;
 			children = (
+				963C9E161F38475600A9103C /* libmidecode */,
 				961A77D61D5C299500EFA629 /* include */,
 				961A782B1D5C299500EFA629 /* lib */,
 			);
@@ -528,6 +542,33 @@
 			path = ffmpeg/udpts;
 			sourceTree = "<group>";
 		};
+		963C9E161F38475600A9103C /* libmidecode */ = {
+			isa = PBXGroup;
+			children = (
+				963C9E171F38475600A9103C /* include */,
+				963C9E1B1F38475600A9103C /* lib */,
+			);
+			path = libmidecode;
+			sourceTree = "<group>";
+		};
+		963C9E171F38475600A9103C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				963C9E181F38475600A9103C /* libmi_dec_common.h */,
+				963C9E191F38475600A9103C /* libmi_h264_dec.h */,
+				963C9E1A1F38475600A9103C /* libmi_h265_dec.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		963C9E1B1F38475600A9103C /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				963C9E1C1F38475600A9103C /* libmi_decoder.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		965F24D11F205573002ACA81 /* x264-iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -699,6 +740,7 @@
 				96395E1B1E88DD8900AE971B /* libavdevice.a in Sources */,
 				96395E1C1E88DD8900AE971B /* libavfilter.a in Sources */,
 				96395E1D1E88DD8900AE971B /* libavformat.a in Sources */,
+				963C9E201F3847AB00A9103C /* MIDecoder.m in Sources */,
 				96395E1E1E88DD8900AE971B /* libavutil.a in Sources */,
 				96395E1F1E88DD8900AE971B /* libswresample.a in Sources */,
 				96395E201E88DD8900AE971B /* libswscale.a in Sources */,
@@ -747,6 +789,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -791,6 +834,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -813,7 +857,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libavcodec\"",
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libavdevice\"",
@@ -830,6 +874,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/ffmpeg/ffmpeg/libmidecode/lib",
 					"$(PROJECT_DIR)/ffmpeg/ffmpeg/lib",
 					"$(PROJECT_DIR)/ffmpeg/x264-iOS/lib",
 				);
@@ -838,6 +883,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
 			name = Debug;
 		};
@@ -846,7 +892,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libavcodec\"",
 					"\"$(SRCROOT)/ffmpeg/ffmpeg/include/libavdevice\"",
@@ -863,6 +909,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/ffmpeg/ffmpeg/libmidecode/lib",
 					"$(PROJECT_DIR)/ffmpeg/ffmpeg/lib",
 					"$(PROJECT_DIR)/ffmpeg/x264-iOS/lib",
 				);
@@ -871,6 +918,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
 			name = Release;
 		};

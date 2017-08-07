@@ -18,6 +18,8 @@
 		961A79381D5C528000EFA629 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79371D5C528000EFA629 /* libbz2.1.0.tbd */; };
 		961A793A1D5C529100EFA629 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */; };
 		961A793C1D5C52A600EFA629 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */; };
+		963C9E251F38519900A9103C /* test.h264 in Resources */ = {isa = PBXBuildFile; fileRef = 963C9E231F38519900A9103C /* test.h264 */; };
+		963C9E261F38519900A9103C /* test.h265 in Resources */ = {isa = PBXBuildFile; fileRef = 963C9E241F38519900A9103C /* test.h265 */; };
 		965F24DC1F205F31002ACA81 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24DB1F205F31002ACA81 /* CoreVideo.framework */; };
 		965F24DE1F205F52002ACA81 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24DD1F205F52002ACA81 /* VideoToolbox.framework */; };
 		965F24E01F205F6D002ACA81 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965F24DF1F205F6D002ACA81 /* AudioToolbox.framework */; };
@@ -90,6 +92,8 @@
 		961A79371D5C528000EFA629 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		961A79391D5C529100EFA629 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
 		961A793B1D5C52A600EFA629 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		963C9E231F38519900A9103C /* test.h264 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.h264; sourceTree = "<group>"; };
+		963C9E241F38519900A9103C /* test.h265 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.h265; sourceTree = "<group>"; };
 		965F24DB1F205F31002ACA81 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		965F24DD1F205F52002ACA81 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		965F24DF1F205F6D002ACA81 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -191,6 +195,8 @@
 				961A772D1D5C1FDF00EFA629 /* ViewController.m */,
 				961A772F1D5C1FDF00EFA629 /* Main.storyboard */,
 				961A77321D5C1FDF00EFA629 /* Assets.xcassets */,
+				963C9E231F38519900A9103C /* test.h264 */,
+				963C9E241F38519900A9103C /* test.h265 */,
 				96A6D21A1F332C0200D74954 /* 265.h265 */,
 				961A77371D5C1FDF00EFA629 /* Info.plist */,
 				961A77261D5C1FDF00EFA629 /* Supporting Files */,
@@ -394,8 +400,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				96A6D21B1F332C0200D74954 /* 265.h265 in Resources */,
+				963C9E261F38519900A9103C /* test.h265 in Resources */,
 				961A77331D5C1FDF00EFA629 /* Assets.xcassets in Resources */,
 				961A77311D5C1FDF00EFA629 /* Main.storyboard in Resources */,
+				963C9E251F38519900A9103C /* test.h264 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +604,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ffmpeg/ffmpeg\"";
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
 			name = Debug;
 		};
@@ -634,6 +643,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ffmpeg/ffmpeg\"";
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
 			name = Release;
 		};

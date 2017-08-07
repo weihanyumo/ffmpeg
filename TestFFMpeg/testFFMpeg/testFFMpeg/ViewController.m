@@ -12,6 +12,7 @@
 #import "TEST_Filter.h"
 #import "PBVideoSwDecoder.h"
 #import "ffUDP.h"
+#import "MIDecoder.h"
 
 
 #import "EAGLView.h"
@@ -173,14 +174,16 @@
     NSString *filename = _textUrl.text;
     NSString *inFile = [self getFilePath:filename DelOld:NO];
     //真机
-    inFile = @"265";
+    inFile = @"test";
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"h265"];
     if(path){
         inFile = path;
     }
     //真机end
-    _play = [[myFilter alloc]init];
-    [_play playFile:[inFile UTF8String] progress:^(int per, PBVideoFrame *frame) {
+//    _play = [[myFilter alloc]init];
+    _play = [[MIDecoder alloc]initWidthCodecID:265];
+    
+    [_play playFile:inFile progress:^(int per, PBVideoFrame *frame) {
         int intWidth = frame.width;
         int intHeight = frame.height;
         [_eaglView setDataSize:intWidth andHeight:intHeight];

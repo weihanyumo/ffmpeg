@@ -241,12 +241,12 @@ end:
 }
 
 
--(int) playFile:(const char*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
+-(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
 {
     playQueue = dispatch_queue_create("playqueu", DISPATCH_QUEUE_SERIAL);
     dispatch_async(playQueue, ^{
         char fileName[1024] = {0};
-        memcpy(fileName, inPutFile, strlen(inPutFile));
+        memcpy(fileName, [inPutFile UTF8String], inPutFile.length);
         [self doPlayFile:fileName progress:progress];
     });
     return 0;

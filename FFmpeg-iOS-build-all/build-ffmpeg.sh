@@ -10,7 +10,7 @@ ARCHS="arm64 armv7 armv7s x86_64 i386"
 
 CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-doc --enable-pic \
                 --disable-programs --disable-ffmpeg --disable-ffplay --disable-ffprobe --disable-ffserver \
-                --enable-openssl\
+                --enable-openssl --enable-neon \
                 --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
                 --enable-gpl --enable-libx264 --enable-decoder=hevc"
 
