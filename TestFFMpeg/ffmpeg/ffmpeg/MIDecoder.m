@@ -26,9 +26,7 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
     float timeCount;
     unsigned char *yuvBuffer;
     
-    ST_MI_DEC_INIT_PARAM stH264InitParam;;
     MI_DEC_HANDLE hH264Handle;
-    ST_MI_DEC_INIT_PARAM stH265InitParam;
     MI_DEC_HANDLE hH265Handle;
     MI_DEC_HANDLE hDecHandle;
     ST_MI_DEC_INARGS stInArgs;
@@ -70,15 +68,12 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
     mi_h265decoder_getversion(&sVer);
     printf("MI version:%s\n", sVer.sVersion);
     
-    stH264InitParam.eThreadType = MI_DEC_MULTI_THREAD;
-    stH264InitParam.uiThreadCount = 5;
-    stH264InitParam.uiTimeScale = 1000;
-    mi_h264decoder_create(&hH264Handle, &stH264InitParam);
-
-    stH265InitParam.eThreadType = MI_DEC_MULTI_THREAD;
-    stH265InitParam.uiThreadCount = 4;
-    stH265InitParam.uiTimeScale = 1000;
-    mi_h265decoder_create(&hH265Handle, &stH265InitParam);
+    ST_MI_DEC_INIT_PARAM stInitParam;
+    stInitParam.uiThreadCount = 5;
+    stInitParam.eThreadType = MI_DEC_MULTI_THREAD;
+    
+    mi_h264decoder_create(&hH264Handle, &stInitParam);
+    mi_h265decoder_create(&hH265Handle, &stInitParam);
 }
 
 - (void) setDecHandle: (NSString *) sPath
@@ -185,7 +180,7 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
         
         NSTimeInterval cost = [[NSDate date]timeIntervalSince1970] - time;
         //    printf("decode cost time:%.3f\n", cost);
-        if (timeCount++ < 50) {
+        if (timeCount++ < 500) {
             timeSumCost += cost;
         }
         else{
