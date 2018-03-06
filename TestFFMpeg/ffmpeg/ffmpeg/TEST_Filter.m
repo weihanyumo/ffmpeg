@@ -40,11 +40,33 @@ static int video_stream_index = -1;
 @end
 @implementation myFilter
 
+typedef struct
+{
+    //unsigned int channel; // Camera Index
+    unsigned int useCount;
+    unsigned char reserved[4];
+} testSt;
 static int open_input_file(const char *filename)
 {
     int ret;
-    AVCodec *dec;
+    testSt *commandData =  (testSt *)malloc(sizeof(testSt));
+    memset(commandData, 0, sizeof(testSt));
+    commandData->useCount = 0x12345678;
+    char *firstBit = (char*)commandData;
+    int *pint = &commandData->useCount;
     
+    firstBit[0] = 1;
+    firstBit[1] = 0;
+    firstBit[2] = 0;
+    firstBit[3] = 0;
+    
+    commandData->useCount;
+    firstBit[3] = 1;
+    firstBit[0] = 0;
+    
+    
+    AVCodec *dec;
+    char *version = av_version_info();
     if ((ret = avformat_open_input(&pFormatCtx, filename, NULL, NULL)) < 0) {
         char buf[1024];
         av_strerror(ret, buf, 1024);
@@ -64,15 +86,20 @@ static int open_input_file(const char *filename)
         printf( "Cannot find a video stream in the input file\n");
         return ret;
     }
+    dec->capabilities |= CODEC_CAP_DELAY;
     video_stream_index = ret;
     pCodecCtx = pFormatCtx->streams[video_stream_index]->codec;
 //    pCodecCtx->flags |= CODEC_FLAG_LOW_DELAY;
     
     /* init the video decoder */
+    pCodecCtx->thread_type = FF_THREAD_FRAME;
+    pCodecCtx->thread_count = 4;
+    pCodecCtx->flags |=  CODEC_FLAG2_CHUNKS;
     if ((ret = avcodec_open2(pCodecCtx, dec, NULL)) < 0) {
         printf( "Cannot open video decoder\n");
         return ret;
     }
+    int type = pCodecCtx->active_thread_type;
     
     return 0;
 }
@@ -241,7 +268,7 @@ end:
 }
 
 
--(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
+-(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame, NSString*log))progress;
 {
     playQueue = dispatch_queue_create("playqueu", DISPATCH_QUEUE_SERIAL);
     dispatch_async(playQueue, ^{
@@ -252,7 +279,7 @@ end:
     return 0;
 }
 
--(int)doPlayFile:(const char*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
+-(int)doPlayFile:(const char*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame, NSString *log))progress
 {
     int ret;
     AVPacket packet;
@@ -280,28 +307,31 @@ end:
             got_frame = 0;
             NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
             ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_frame, &packet);
+//            [self parserSPS:pCodecCtx->extradata Len:pCodecCtx->extradata_size];
             
             NSTimeInterval cost = [[NSDate date]timeIntervalSince1970] - time;
             //    printf("decode cost time:%.3f\n", cost);
-            if (timeCount++ < 50) {
-                timeSumCost += cost;
-            }
-            else{
-                printf("decode W:%d H:%d  avg cost :%.3f\n", pFrame->width, pFrame->height, timeSumCost / timeCount);
-                timeCount = 0;
-                timeSumCost = 0;
-            }
             if (ret < 0) {
                 printf( "Error decoding video\n");
                 break;
             }
             
             if (got_frame) {
+                NSString*delog = nil;
+                if (timeCount++ < 50) {
+                    timeSumCost += cost;
+                }
+                else{
+                    printf("decode W:%d H:%d  avg cost :%.3f\n", pFrame->width, pFrame->height, timeSumCost / timeCount);
+                    delog = [NSString stringWithFormat:@"decode W:%d H:%d  avg cost :%.3f\n", pFrame->width, pFrame->height, timeSumCost / timeCount];
+                    timeCount = 0;
+                    timeSumCost = 0;
+                }
                 pFrame->pts = av_frame_get_best_effort_timestamp(pFrame);
                 
                 PBVideoFrame *pvFrame = [self getVideoFrme:pFrame :pFrame->width :pFrame->height];
 //                dispatch_async(dispatch_get_main_queue(), ^{
-                    progress(1,pvFrame);
+                    progress(1,pvFrame, delog);
 //                });
             }
         }
@@ -366,6 +396,183 @@ end:
     
     
     return pvFrame;
+}
+
+
+//test
+-(BOOL)parserSPS:(void *)data Len:(int)dataSize
+{
+    int width = 0;
+    int height = 0;
+    
+    char buf[1024]=  {0};
+    memcpy(buf, data, dataSize);
+    long nLen = dataSize;
+    
+    int start=0;
+    int *StartBit = &start;
+    //Byte:1
+    int forbidden_zero_bit= u(1,buf,StartBit);//[self u:1 Data:buf StartBit:StartBit];// u(1,buf,StartBit);
+    int nal_ref_idc= u(2, buf, StartBit);// [self u:2 Data:buf StartBit:StartBit];//u(2,buf,StartBit);
+    int nal_unit_type= u(5, buf, StartBit);//[self u:5 Data:buf StartBit:StartBit];//u(5,buf,StartBit);
+    if(nal_unit_type==7)
+    {
+        //Byte:2
+        int profile_idc=u(8,buf,StartBit);
+        //Byte:3
+        int constraint_set0_flag=u(1,buf,StartBit);//(buf[1] & 0x80)>>7;
+        int constraint_set1_flag=u(1,buf,StartBit);//(buf[1] & 0x40)>>6;
+        int constraint_set2_flag=u(1,buf,StartBit);//(buf[1] & 0x20)>>5;
+        int constraint_set3_flag=u(1,buf,StartBit);//(buf[1] & 0x10)>>4;
+        int reserved_zero_4bits=u(4,buf,StartBit);
+        //Byte:4
+        int level_idc=u(8,buf,StartBit);
+        
+        int seq_parameter_set_id=Ue(buf,nLen,StartBit);
+        if( profile_idc == 100 || profile_idc == 110 || profile_idc == 122 || profile_idc == 144 )
+        {
+            int chroma_format_idc=Ue(buf,nLen,StartBit);
+            if( chroma_format_idc == 3 )
+            {
+                int residual_colour_transform_flag=u(1,buf,StartBit);
+            }
+            int bit_depth_luma_minus8=Ue(buf,nLen,StartBit);
+            int bit_depth_chroma_minus8=Ue(buf,nLen,StartBit);
+            int qpprime_y_zero_transform_bypass_flag=u(1,buf,StartBit);
+            int seq_scaling_matrix_present_flag=u(1,buf,StartBit);
+            
+            int seq_scaling_list_present_flag[8];
+            if( seq_scaling_matrix_present_flag )
+            {
+                for( int i = 0; i < 8; i++ )
+                {
+                    seq_scaling_list_present_flag[i]=u(1,buf,StartBit);
+                }
+            }
+        }
+        int log2_max_frame_num_minus4=Ue(buf,nLen,StartBit);
+        int pic_order_cnt_type=Ue(buf,nLen,StartBit);
+        if( pic_order_cnt_type == 0 )
+        {
+            int log2_max_pic_order_cnt_lsb_minus4=Ue(buf,nLen,StartBit);
+        }
+        else if( pic_order_cnt_type == 1 )
+        {
+            int delta_pic_order_always_zero_flag=u(1,buf,StartBit);
+            int offset_for_non_ref_pic=Se(buf,nLen,StartBit);
+            int offset_for_top_to_bottom_field=Se(buf,nLen,StartBit);
+            int num_ref_frames_in_pic_order_cnt_cycle=Ue(buf,nLen,StartBit);
+            int *offset_for_ref_frame=(int*)malloc(num_ref_frames_in_pic_order_cnt_cycle * sizeof(int));//new int[num_ref_frames_in_pic_order_cnt_cycle];
+            for( int i = 0; i < num_ref_frames_in_pic_order_cnt_cycle; i++ )
+                offset_for_ref_frame[i]=Se(buf,nLen,StartBit);
+            free(offset_for_ref_frame);
+            offset_for_ref_frame = 0;
+        }
+        int num_ref_frames=Ue(buf,nLen,StartBit);
+        int gaps_in_frame_num_value_allowed_flag=u(1,buf,StartBit);
+        
+        int pic_width_in_mbs_minus1=Ue(buf,nLen,StartBit);
+        
+        int pic_height_in_map_units_minus1=Ue(buf,nLen,StartBit);
+        width=(pic_width_in_mbs_minus1+1)*16;
+        height=(pic_height_in_map_units_minus1+1)*16;
+        int frame_mbs_only_flag=u(1,buf,StartBit);
+        if(!frame_mbs_only_flag)
+        {
+            int mb_adaptive_frame_field_flag=u(1,buf,StartBit);
+        }
+        
+        int direct_8x8_inference_flag=u(1,buf,StartBit);
+        int frame_cropping_flag=u(1,buf,StartBit);
+        if(frame_cropping_flag)
+        {
+            int frame_crop_left_offset=Ue(buf,nLen,StartBit);
+            int frame_crop_right_offset=Ue(buf,nLen,StartBit);
+            int frame_crop_top_offset=Ue(buf,nLen,StartBit);
+            int frame_crop_bottom_offset=Ue(buf,nLen,StartBit);
+            
+            width = ((pic_width_in_mbs_minus1 +1)*16) - frame_crop_left_offset*2 - frame_crop_right_offset*2;
+            height= ((2 - frame_mbs_only_flag)* (pic_height_in_map_units_minus1 +1) * 16) - (frame_crop_top_offset * 2) - (frame_crop_bottom_offset * 2);
+            
+        }
+        int vui_parameters_present_flag = u(1, buf, StartBit);
+        if (vui_parameters_present_flag) {
+            int aspect_ratio_idc = u(8, buf, StartBit);
+            if (aspect_ratio_idc == 54) {
+                int sar_width = u(2, buf, StartBit);
+                int sar_height = u(2, buf, StartBit);
+                
+            }
+        }
+        
+        return true;
+    }
+    
+    return false;
+}
+
+
+uint Ue(char *pBuff, int nLen, int *pStartBit)
+{
+    //计算0bit的个数
+    int nZeroNum = 0;
+    while (*pStartBit < nLen * 8)
+    {
+        char c = pBuff[*pStartBit / 8];
+        int c2 = 0x80 >> (*pStartBit % 8);
+        
+        if (pBuff[*pStartBit / 8] & (0x80 >> (*pStartBit % 8))) //&:按位与，%取余
+        {
+            break;
+        }
+        nZeroNum++;
+        (*pStartBit)++;
+    }
+    (*pStartBit)++;
+    //计算结果
+    uint dwRet = 0;
+    for (int i=0; i<nZeroNum; i++)
+    {
+        dwRet <<= 1;
+        char c = pBuff[*pStartBit / 8];
+        int c2 = 0x80 >> (*pStartBit % 8);
+        if (pBuff[*pStartBit / 8] & (0x80 >> (*pStartBit % 8)))
+        {
+            dwRet += 1;
+        }
+        (*pStartBit)++;
+    }
+    
+    return (1 << nZeroNum) - 1 + dwRet;
+}
+
+int Se(char *pBuff, int nLen, int *pStartBit)
+{
+    int UeVal=Ue(pBuff,nLen,pStartBit);
+    double k=UeVal;
+    //ceil函数：ceil函数的作用是求不小于给定实数的最小整数。ceil(2)=ceil(1.2)=cei(1.5)=2.00
+    int nValue = ceil(k/2);
+    if (UeVal % 2==0)
+        nValue=-nValue;
+    
+    return nValue;
+}
+
+int u(int BitCount, char* buf, int *pStartBit)
+{
+    short dwRet = 0;
+    for (int i=0; i<BitCount; i++)
+    {
+        dwRet <<= 1;
+        char c = buf[*pStartBit / 8];
+        int c2 = 0x80 >> (*pStartBit % 8);
+        if (buf[*pStartBit / 8] & (0x80 >> (*pStartBit % 8)))
+        {
+            dwRet += 1;
+        }
+        (*pStartBit)++;
+    }
+    return dwRet;
 }
 
 @end
