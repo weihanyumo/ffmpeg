@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SOURCE="ffmpeg-3.3.2"
+SOURCE="ffmpeg-3.0.10"
 FAT="Fat"
 SCRATCH="scratch"
 THIN=`pwd`/"thin"
@@ -10,9 +10,9 @@ ARCHS="arm64 armv7 armv7s x86_64 i386"
 
 CONFIGURE_FLAGS="--disable-asm --enable-cross-compile --disable-debug --enable-nonfree --disable-doc --enable-pic \
                 --disable-programs --disable-ffmpeg --disable-ffplay --disable-ffprobe --disable-ffserver \
-                --enable-openssl --enable-neon \
+                --enable-openssl --enable-neon  --enable-pthreads \
                 --disable-decoders --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=aac \
-                --enable-gpl --enable-libx264 --enable-decoder=hevc"
+--enable-gpl --enable-libx264 --enable-decoder=hevc --enable-shared"
 
 
 X265="n"
@@ -88,13 +88,13 @@ then
         CFLAGS="$CFLAGS -I$FFMPEG_DEP_OPENSSL_INC -I$FFMPEG_DEP_X264_INC"
         FFMPEG_DEP_LIBS="$CFLAGS -L$FFMPEG_DEP_OPENSSL_LIB -L$FFMPEG_DEP_X264_LIB -lssl -lcrypto -lx264"
 
-        if [ "$X265" ]
-        then
+#        if [ "$X265" ]
+#        then
 #FFMPEG_DEP_LIBS="$FFMPEG_DEP_LIBS"
 # -lx265"
-            CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-decoder=hevc "
+#            CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-decoder=hevc "
 #--enable-muxer=hevc --enable-libx265 --extra-libs=-lstdc++"
-        fi
+#        fi
 
 		LDFLAGS="$FFMPEG_DEP_LIBS"
 
@@ -127,11 +127,29 @@ then
 		lipo -create `find $THIN -name $LIB` -output $FAT/lib/$LIB || exit 1
 	done
 
-	cd $CWD
-	cp -rf $THIN/$1/include $FAT
+    cd $CWD
+    cp -rf $THIN/$1/include $FAT
+
+    for DYLIB in *.dylib
+    do
+        cd $CWD
+        lipo -create `find $THIN -name $DYLIB` -output $FAT/lib/$DYLIB || exit 1
+    done
+    for DYLIB in `ls | grep [a-z].dylib`
+    do
+        echo $DYLIB
+        cd $CWD
+        lipo -create `find $THIN -name $DYLIB` -output $FAT/lib/$DYLIB || exit 1
+    done
 fi
 
-rm -r $THIN
-rm -r $SCRATCH
+#rm -r $THIN
+#rm -r $SCRATCH
 
 echo Done
+
+
+#./configure --enable-decoder=h264 --enable-decoder=mpeg4 --enable-gpl --enable-libx264 --extra-cflags="-I/Users/duhaodong/Downloads/MacXYLibs/x264" --extra-ldflags="-L/Users/duhaodong/Downloads/MacXYLibs/x264"
+
+
+
