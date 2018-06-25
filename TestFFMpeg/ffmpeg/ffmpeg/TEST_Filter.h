@@ -18,7 +18,8 @@
 
 -(int) filterFile:(const char *)inPutFile :( const char* )pngName :(const char*)outPutFile  progress:(void (^)(int32_t per, PBVideoFrame *frame))progress;
 
--(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress;
+-(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame, NSString*log))progress;
+
 -(void)cancelPaly;
 @end
 

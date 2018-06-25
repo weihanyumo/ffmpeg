@@ -35,6 +35,29 @@
 
 #define MAX_YUV_BUFFER_LENGTH 1920*1080*2
 
+static void ffmpeg_log_callback(void *ptr, int level, const char *fmt, va_list vl)
+{
+    if (level > av_log_get_level())
+    {
+        return;
+    }
+    char strLog[1024];
+    
+    const char *version = av_version_info();
+    printf("PBVideoSwDecoder ffmpeg version:%s\n",version);
+    
+    vsprintf(strLog, fmt, vl);
+    printf("PBVideoSwDecoder error :%s\n", strLog);
+    
+    AVClass *cls = ptr ? *(AVClass **)ptr : NULL;
+    
+    const char *module = cls ? cls->item_name(ptr) : "NULL";
+    if (module) {
+        printf("PBVideoSwDecoder error module:%s\n", module);
+    }
+}
+
+
 @implementation PBVideoFrame
 -(void)dealloc
 {
@@ -80,6 +103,9 @@
 -(BOOL)initFFMpeg
 {
     avcodec_register_all();
+    
+    av_log_set_level(AV_LOG_ERROR);
+    av_log_set_callback(ffmpeg_log_callback);
     
     // find the decoder for H264
 //    avCodec = avcodec_find_decoder(AV_CODEC_ID_H264);
@@ -239,3 +265,46 @@
 }
 
 @end
+
+
+void get_fixed_header(const unsigned char buff[7], adts_fixed_header *header) {
+    unsigned long long adts = 0;
+    const unsigned char *p = buff;
+    adts |= *p ++; adts <<= 8;
+    adts |= *p ++; adts <<= 8;
+    adts |= *p ++; adts <<= 8;
+    adts |= *p ++; adts <<= 8;
+    adts |= *p ++; adts <<= 8;
+    adts |= *p ++; adts <<= 8;
+    adts |= *p ++;
+    
+    
+    header->syncword                 = (adts >> 44);
+    header->ID                       = (adts >> 43) & 0x01;
+    header->layer                    = (adts >> 41) & 0x03;
+    header->protection_absent        = (adts >> 40) & 0x01;
+    header->profile                  = (adts >> 38) & 0x03;
+    header->sampling_frequency_index = (adts >> 34) & 0x0e;
+    header->private_bit              = (adts >> 33) & 0x01;
+    header->channel_configuration    = (adts >> 30) & 0x07;
+    header->original_copy            = (adts >> 29) & 0x01;
+    header->home                     = (adts >> 28) & 0x01;
+}
+
+void get_variable_header(const unsigned char buff[7], adts_variable_header *header) {
+    unsigned long long adts = 0;
+    adts  = buff[0]; adts <<= 8;
+    adts |= buff[1]; adts <<= 8;
+    adts |= buff[2]; adts <<= 8;
+    adts |= buff[3]; adts <<= 8;
+    adts |= buff[4]; adts <<= 8;
+    adts |= buff[5]; adts <<= 8;
+    adts |= buff[6];
+    
+    header->copyright_identification_bit = (adts >> 27) & 0x01;
+    header->copyright_identification_start = (adts >> 26) & 0x01;
+    header->aac_frame_length = (adts >> 13) & ((int)pow(2, 14) - 1);
+    header->adts_buffer_fullness = (adts >> 2) & ((int)pow(2, 11) - 1);
+    header->number_of_raw_data_blocks_in_frame = adts & 0x03;
+}
+

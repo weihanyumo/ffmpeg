@@ -74,6 +74,14 @@ static int open_input_file(const char *filename)
         
         return ret;
     }
+    av_dump_format(pFormatCtx, 0, filename, 0);
+    
+    AVDictionaryEntry *tag = NULL;
+    printf("metaldata:\n\n\n");
+    while ((tag = av_dict_get(pFormatCtx->metadata, "", tag, AV_DICT_IGNORE_SUFFIX)))
+    {
+        printf("%s=%s\n", tag->key, tag->value);
+    }
     
     if ((ret = avformat_find_stream_info(pFormatCtx, NULL)) < 0) {
         printf( "Cannot find stream information\n");
@@ -161,6 +169,26 @@ static int init_filters(const char *filters_descr)
     return 0;
 }
 
+
+static void ffmpeg_log_callback(void *ptr, int level, const char *fmt, va_list vl)
+{
+    if (level > av_log_get_level())
+    {
+        return;
+    }
+    char strLog[1024];
+    
+    vsprintf(strLog, fmt, vl);
+    printf("testlog video error :%s\n", strLog);
+    
+    AVClass *cls = ptr ? *(AVClass **)ptr : NULL;
+    
+    const char *module = cls ? cls->item_name(ptr) : "NULL";
+    if (module) {
+        printf("testlog video error module:%s\n", module);
+    }
+}
+
 -(int) filterFile:(const char *)inPutFile :( const char* )pngName :(const char*)outPutFile  progress:(void (^)(int32_t per, PBVideoFrame *frame))progress
 {
     int ret;
@@ -172,6 +200,8 @@ static int init_filters(const char *filters_descr)
     
     av_register_all();
     avfilter_register_all();
+    av_log_set_level(AV_LOG_ERROR);
+    av_log_set_callback(ffmpeg_log_callback);
     
     if ((ret = open_input_file(inPutFile)) < 0)
         goto end;
@@ -304,10 +334,23 @@ end:
             break;
         
         if (packet.stream_index == video_stream_index) {
+            printf("video pts:%lld\n", packet.pts);
             got_frame = 0;
             NSTimeInterval time = [[NSDate date]timeIntervalSince1970];
             ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_frame, &packet);
+            printf("testlog video width:%d height:%d\n", pFrame->width, pFrame->height);
+//            NSString *ori = @"67 64 00 1e ac 34 c8 0a 02 ff 97 01 6e 02 02 02 80 00 01 f4 00 00 4e 20 74 30 08 38 00 83 35 de 5c 68 60 10 70 01 06 6b bc b8 50";
+//            NSArray *arrdata = [ori componentsSeparatedByString:@" "];
+//            int spsLen = [arrdata count];
+//            char sps[1024]=  {0};
+//            for (int i=0; i<spsLen; i++) {
+//                NSString *strVal = [arrdata objectAtIndex:i];
+//                unsigned long hVal = strtoul([strVal UTF8String],0,16);
+//                sps[i] = hVal;
+//            }
+//            int size = 43;
 //            [self parserSPS:pCodecCtx->extradata Len:pCodecCtx->extradata_size];
+//            [self parserSPS:sps Len:spsLen];
             
             NSTimeInterval cost = [[NSDate date]timeIntervalSince1970] - time;
             //    printf("decode cost time:%.3f\n", cost);

@@ -8,24 +8,34 @@
 
 #import "MIDecoder.h"
 #import "PBVideoSwDecoder.h"
+#import <VideoToolbox/VideoToolbox.h>
+#import <VideoToolbox/VTCompressionSession.h>
+#if 0
 #import "libmi_h264_dec.h"
 #import "libmi_h265_dec.h"
 #import "libmi_dec_common.h"
+#endif
 
 #define MAX_YUV_BUFFER_LENGTH 2688*1520*2
 
 #import <mach/mach_time.h>
 
 
+#if 0
 typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INARGS *pstInArgs, ST_MI_DEC_OUTARGS *pstOutArgs);
+#endif
+
 @interface MIDecoder ()
 {
     
     //test log
     float timeSumCost;
     float timeCount;
-    unsigned char *yuvBuffer;
     
+    
+    
+    unsigned char *yuvBuffer;
+#if 0
     MI_DEC_HANDLE hH264Handle;
     MI_DEC_HANDLE hH265Handle;
     MI_DEC_HANDLE hDecHandle;
@@ -33,6 +43,7 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
     ST_MI_DEC_OUTARGS stOutArgs;
     EM_MI_DECODER_TYPE eDecoderType;
     pfn_mi_decoder_decodeframe pFunDecodeFrame;
+#endif
     
 }
 
@@ -46,11 +57,11 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
     if (self) {
             [self initDecoder];
         if (codecID == 264) {
-            eDecoderType = MI_DECODER_H264;
+//            eDecoderType = MI_DECODER_H264;
         }
         else
         {
-            eDecoderType = MI_DECODER_H265;
+//            eDecoderType = MI_DECODER_H265;
         }
     }
     return self;
@@ -58,52 +69,54 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
 
 -(void)initDecoder
 {
-    hH264Handle = NULL;
-    hH265Handle = NULL;
-    eDecoderType = MI_DECODER_UNKNOWN;
-    pFunDecodeFrame = NULL;
-    
-    ST_MI_DEC_LIB_VERSION sVer;
-    mi_h264decoder_getversion(&sVer);
-    mi_h265decoder_getversion(&sVer);
-    printf("MI version:%s\n", sVer.sVersion);
-    
-    ST_MI_DEC_INIT_PARAM stInitParam;
-    stInitParam.uiThreadCount = 5;
-    stInitParam.eThreadType = MI_DEC_MULTI_THREAD;
-    
-    mi_h264decoder_create(&hH264Handle, &stInitParam);
-    mi_h265decoder_create(&hH265Handle, &stInitParam);
+//    hH264Handle = NULL;
+//    hH265Handle = NULL;
+//    eDecoderType = MI_DECODER_UNKNOWN;
+//    pFunDecodeFrame = NULL;
+//    
+//    ST_MI_DEC_LIB_VERSION sVer;
+//    mi_h264decoder_getversion(&sVer);
+//    mi_h265decoder_getversion(&sVer);
+//    printf("MI version:%s\n", sVer.sVersion);
+//    
+//    ST_MI_DEC_INIT_PARAM stInitParam;
+//    stInitParam.uiThreadCount = 5;
+//    stInitParam.eThreadType = MI_DEC_MULTI_THREAD;
+//    
+//    mi_h264decoder_create(&hH264Handle, &stInitParam);
+//    mi_h265decoder_create(&hH265Handle, &stInitParam);
 }
 
 - (void) setDecHandle: (NSString *) sPath
 {
     BOOL bHave = [sPath hasSuffix: @"h264"];
-    eDecoderType = MI_DECODER_UNKNOWN;
-    
-    if (bHave)
-    {
-        eDecoderType = MI_DECODER_H264;
-        hDecHandle = hH264Handle;
-        return;
-    }
-    
-    bHave = [sPath hasSuffix: @"h265"];
-    if (bHave)
-    {
-        eDecoderType = MI_DECODER_H265;
-        hDecHandle = hH265Handle;
-        return;
-    }
+//    eDecoderType = MI_DECODER_UNKNOWN;
+//    
+//    if (bHave)
+//    {
+//        eDecoderType = MI_DECODER_H264;
+//        hDecHandle = hH264Handle;
+//        return;
+//    }
+//    
+//    bHave = [sPath hasSuffix: @"h265"];
+//    if (bHave)
+//    {
+//        eDecoderType = MI_DECODER_H265;
+//        hDecHandle = hH265Handle;
+//        return;
+//    }
 }
 
--(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress{
+-(int) playFile:(NSString*)inPutFile progress:(void(^)(int per, PBVideoFrame*frame))progress
+{
     [self startDecode: inPutFile Progress:progress];
     return 0;
 }
 
 - (int) startDecode: (NSString *) sPath Progress:(void(^)(int per, PBVideoFrame*frame))progress
 {
+#if 0
     NSError *iError = nil;
     BOOL isDir;
     INT32 iRet = 0;
@@ -200,6 +213,8 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
         // Output YUV420P graphic
         if (stOutArgs.eDecodeStatus == MI_DEC_GETDISPLAY)
         {
+            
+            printf("decode success ret:%d\n", iRet);
             if(!yuvBuffer)
             {
                 yuvBuffer = (unsigned char *)malloc(MAX_YUV_BUFFER_LENGTH);
@@ -239,8 +254,11 @@ typedef int (*pfn_mi_decoder_decodeframe)(MI_DEC_HANDLE hDecoder, ST_MI_DEC_INAR
             printf("decode failded ret:%d\n", iRet);
         }
     }
+    
 exitmain:
+    
     printf("decode over!!!!!\n\n\n");
+    VTCompressionSessionRef VTCsession;
     if (fp_in != NULL)
         fclose(fp_in);
     
@@ -249,6 +267,7 @@ exitmain:
         free(pInputStream);
         pInputStream = NULL;
     }
+#endif
     return 0;
 }
 
